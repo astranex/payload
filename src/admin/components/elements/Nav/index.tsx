@@ -16,144 +16,148 @@ import './index.scss';
 const baseClass = 'nav';
 
 const DefaultNav = () => {
-  const { permissions } = useAuth();
-  const [menuActive, setMenuActive] = useState(false);
-  const history = useHistory();
-  const {
-    collections,
-    globals,
-    routes: {
-      admin,
-    },
-    admin: {
-      components: {
-        beforeNavLinks,
-        afterNavLinks,
-      },
-    },
-  } = useConfig();
+    const { permissions } = useAuth();
+    const [menuActive, setMenuActive] = useState(false);
+    const history = useHistory();
+    const {
+        collections,
+        globals,
+        routes: { admin },
+        admin: {
+            components: { beforeNavLinks, afterNavLinks }
+        }
+    } = useConfig();
 
-  const classes = [
-    baseClass,
-    menuActive && `${baseClass}--menu-active`,
-  ].filter(Boolean).join(' ');
+    const classes = [baseClass, menuActive && `${baseClass}--menu-active`]
+        .filter(Boolean)
+        .join(' ');
 
-  useEffect(() => history.listen(() => {
-    setMenuActive(false);
-  }), [history]);
+    useEffect(
+        () =>
+            history.listen(() => {
+                setMenuActive(false);
+            }),
+        [history]
+    );
 
-  return (
-    <aside className={classes}>
-      <div className={`${baseClass}__scroll`}>
-        <header>
-          <Link
-            to={admin}
-            className={`${baseClass}__brand`}
-          >
-            <Icon />
-          </Link>
-          <button
-            type="button"
-            className={`${baseClass}__mobile-menu-btn`}
-            onClick={() => setMenuActive(!menuActive)}
-          >
-            {menuActive && (
-              <CloseMenu />
-            )}
-            {!menuActive && (
-              <Menu />
-            )}
-          </button>
-        </header>
-        <div className={`${baseClass}__wrap`}>
-          {Array.isArray(beforeNavLinks) && beforeNavLinks.map((Component, i) => <Component key={i} />)}
-          <span className={`${baseClass}__label`}>Collections</span>
-          <nav>
-            {collections && collections.map((collection, i) => {
-              const href = `${admin}/collections/${collection.slug}`;
+    return (
+        <aside className={classes}>
+            <div className={`${baseClass}__scroll`}>
+                <header>
+                    <Link to={admin} className={`${baseClass}__brand`}>
+                        <Icon />
+                    </Link>
+                    <button
+                        type="button"
+                        className={`${baseClass}__mobile-menu-btn`}
+                        onClick={() => setMenuActive(!menuActive)}
+                    >
+                        {menuActive && <CloseMenu />}
+                        {!menuActive && <Menu />}
+                    </button>
+                </header>
+                <div className={`${baseClass}__wrap`}>
+                    {Array.isArray(beforeNavLinks) &&
+                        beforeNavLinks.map((Component, i) => (
+                            <Component key={i} />
+                        ))}
+                    <span className={`${baseClass}__label`}>Коллекции</span>
+                    <nav>
+                        {collections &&
+                            collections.map((collection, i) => {
+                                const href = `${admin}/collections/${collection.slug}`;
 
-              if (permissions?.collections?.[collection.slug]?.read.permission) {
-                return (
-                  <NavLink
-                    id={`nav-${collection.slug}`}
-                    activeClassName="active"
-                    key={i}
-                    to={href}
-                  >
-                    <Chevron />
-                    {collection.labels.plural}
-                  </NavLink>
-                );
-              }
+                                if (
+                                    permissions?.collections?.[collection.slug]
+                                        ?.read.permission
+                                ) {
+                                    return (
+                                        <NavLink
+                                            id={`nav-${collection.slug}`}
+                                            activeClassName="active"
+                                            key={i}
+                                            to={href}
+                                        >
+                                            <Chevron />
+                                            {collection.labels.plural}
+                                        </NavLink>
+                                    );
+                                }
 
-              return null;
-            })}
-          </nav>
-          {(globals && globals.length > 0) && (
-            <React.Fragment>
-              <span className={`${baseClass}__label`}>Globals</span>
-              <nav>
-                {globals.map((global, i) => {
-                  const href = `${admin}/globals/${global.slug}`;
+                                return null;
+                            })}
+                    </nav>
+                    {globals && globals.length > 0 && (
+                        <React.Fragment>
+                            <span className={`${baseClass}__label`}>
+                                Глобальные
+                            </span>
+                            <nav>
+                                {globals.map((global, i) => {
+                                    const href = `${admin}/globals/${global.slug}`;
 
-                  if (permissions?.globals?.[global.slug].read.permission) {
-                    return (
-                      <NavLink
-                        id={`nav-global-${global.slug}`}
-                        activeClassName="active"
-                        key={i}
-                        to={href}
-                      >
-                        <Chevron />
-                        {global.label}
-                      </NavLink>
-                    );
-                  }
+                                    if (
+                                        permissions?.globals?.[global.slug].read
+                                            .permission
+                                    ) {
+                                        return (
+                                            <NavLink
+                                                id={`nav-global-${global.slug}`}
+                                                activeClassName="active"
+                                                key={i}
+                                                to={href}
+                                            >
+                                                <Chevron />
+                                                {global.label}
+                                            </NavLink>
+                                        );
+                                    }
 
-                  return null;
-                })}
-              </nav>
-            </React.Fragment>
-          )}
-          {Array.isArray(afterNavLinks) && afterNavLinks.map((Component, i) => <Component key={i} />)}
-          <div className={`${baseClass}__controls`}>
-            <Localizer />
-            <Link
-              to={`${admin}/account`}
-              className={`${baseClass}__account`}
-            >
-              <Account />
-            </Link>
-            <Link
-              to={`${admin}/logout`}
-              className={`${baseClass}__log-out`}
-            >
-              <LogOut />
-            </Link>
-          </div>
-        </div>
-      </div>
-    </aside>
-  );
+                                    return null;
+                                })}
+                            </nav>
+                        </React.Fragment>
+                    )}
+                    {Array.isArray(afterNavLinks) &&
+                        afterNavLinks.map((Component, i) => (
+                            <Component key={i} />
+                        ))}
+                    <div className={`${baseClass}__controls`}>
+                        <Localizer />
+                        <Link
+                            to={`${admin}/account`}
+                            className={`${baseClass}__account`}
+                        >
+                            <Account />
+                        </Link>
+                        <Link
+                            to={`${admin}/logout`}
+                            className={`${baseClass}__log-out`}
+                        >
+                            <LogOut />
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    );
 };
 
 const Nav: React.FC = () => {
-  const {
-    admin: {
-      components: {
-        Nav: CustomNav,
-      } = {
-        Nav: undefined,
-      },
-    } = {},
-  } = useConfig();
+    const {
+        admin: {
+            components: { Nav: CustomNav } = {
+                Nav: undefined
+            }
+        } = {}
+    } = useConfig();
 
-  return (
-    <RenderCustomComponent
-      CustomComponent={CustomNav}
-      DefaultComponent={DefaultNav}
-    />
-  );
+    return (
+        <RenderCustomComponent
+            CustomComponent={CustomNav}
+            DefaultComponent={DefaultNav}
+        />
+    );
 };
 
 export default Nav;
