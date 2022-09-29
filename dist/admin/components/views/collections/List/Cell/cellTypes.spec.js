@@ -95,7 +95,7 @@ describe('Cell Types', () => {
             expect(el).toHaveTextContent('');
         });
     });
-    describe('Выбрать', () => {
+    describe('Select', () => {
         const fieldWithOptionsObject = {
             type: 'select',
             name: 'selectObject',
@@ -108,7 +108,7 @@ describe('Cell Types', () => {
                 }],
         };
         const fieldWithStringsOptions = {
-            type: 'Выбрать',
+            type: 'Select',
             name: 'selectString',
             options: ['blue', 'green', 'yellow'],
         };

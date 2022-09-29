@@ -9,16 +9,42 @@ const baseClass = 'logout';
 const Logout = (props) => {
     const { inactivity } = props;
     const { logOut } = useAuth();
-    const { routes: { admin } } = useConfig();
+    const {
+        routes: { admin }
+    } = useConfig();
     useEffect(() => {
         logOut();
     }, [logOut]);
-    return (React.createElement(Minimal, { className: baseClass },
-        React.createElement(Meta, { title: "Logout", description: "Logout user", keywords: "Logout, Payload, CMS" }),
-        React.createElement("div", { className: `${baseClass}__wrap` },
-            inactivity && (React.createElement("h2", null, "You have been logged out due to inactivity.")),
-            !inactivity && (React.createElement("h2", null, "You have been logged out successfully.")),
-            React.createElement("br", null),
-            React.createElement(Button, { el: "anchor", buttonStyle: "secondary", url: `${admin}/login` }, "Log back in"))));
+    return React.createElement(
+        Minimal,
+        { className: baseClass },
+        React.createElement(Meta, {
+            title: 'Выход из системы',
+            description: 'Выход из системы',
+            keywords: 'Выход из системы, Payload, CMS'
+        }),
+        React.createElement(
+            'div',
+            { className: `${baseClass}__wrap` },
+            inactivity &&
+                React.createElement(
+                    'h2',
+                    null,
+                    'Вы вышли из системы из-за неактивности.'
+                ),
+            !inactivity &&
+                React.createElement('h2', null, 'Вы успешно вышли из системы.'),
+            React.createElement('br', null),
+            React.createElement(
+                Button,
+                {
+                    el: 'anchor',
+                    buttonStyle: 'secondary',
+                    url: `${admin}/login`
+                },
+                'Войти снова'
+            )
+        )
+    );
 };
 export default Logout;
