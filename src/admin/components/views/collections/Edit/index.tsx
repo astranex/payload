@@ -92,7 +92,7 @@ const EditView: React.FC<IndexProps> = (props) => {
       });
     } else {
       nav.push({
-        label: 'Create New',
+        label: 'Создать',
       });
     }
 

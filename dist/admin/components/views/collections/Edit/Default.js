@@ -60,7 +60,7 @@ const DefaultEditView = (props) => {
                             React.createElement("ul", { className: `${baseClass}__collection-actions` },
                                 ((_d = permissions === null || permissions === void 0 ? void 0 : permissions.create) === null || _d === void 0 ? void 0 : _d.permission) && (React.createElement(React.Fragment, null,
                                     React.createElement("li", null,
-                                        React.createElement(Link, { id: "action-create", to: `${admin}/collections/${slug}/create` }, "Create New")),
+                                        React.createElement(Link, { id: "action-create", to: `${admin}/collections/${slug}/create` }, "Создать")),
                                     !disableDuplicate && isEditing && (React.createElement("li", null,
                                         React.createElement(DuplicateDocument, { collection: collection, id: id, slug: slug }))))),
                                 ((_e = permissions === null || permissions === void 0 ? void 0 : permissions.delete) === null || _e === void 0 ? void 0 : _e.permission) && (React.createElement("li", null,

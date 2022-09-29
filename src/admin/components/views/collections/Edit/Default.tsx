@@ -139,7 +139,7 @@ const DefaultEditView: React.FC<Props> = (props) => {
                           id="action-create"
                           to={`${admin}/collections/${slug}/create`}
                         >
-                          Create New
+                          Создать
                         </Link>
                       </li>
                       {!disableDuplicate && isEditing && (
