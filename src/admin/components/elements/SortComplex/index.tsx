@@ -73,7 +73,7 @@ const SortComplex: React.FC<Props> = (props) => {
                 <div className={`${baseClass}__wrap`}>
                     <div className={`${baseClass}__select`}>
                         <div className={`${baseClass}__label`}>
-                            Column to Sort
+                            Колонка для сортировки
                         </div>
                         <ReactSelect
                             value={sortField}
@@ -82,7 +82,7 @@ const SortComplex: React.FC<Props> = (props) => {
                         />
                     </div>
                     <div className={`${baseClass}__select`}>
-                        <div className={`${baseClass}__label`}>Order</div>
+                        <div className={`${baseClass}__label`}>Порядок</div>
                         <ReactSelect
                             value={sortOrder}
                             options={sortOptions}
