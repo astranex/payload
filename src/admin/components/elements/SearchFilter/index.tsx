@@ -57,7 +57,7 @@ const SearchFilter: React.FC<Props> = (props) => {
     <div className={baseClass}>
       <input
         className={`${baseClass}__input`}
-        placeholder={`Search by ${fieldLabel}`}
+        placeholder={`Поиск: ${fieldLabel}`}
         type="text"
         value={search || ''}
         onChange={(e) => setSearch(e.target.value)}

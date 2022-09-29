@@ -38,7 +38,7 @@ const SearchFilter = (props) => {
         }
     }, [debouncedSearch, history, fieldName, params, handleChange, modifySearchQuery]);
     return (React.createElement("div", { className: baseClass },
-        React.createElement("input", { className: `${baseClass}__input`, placeholder: `Search by ${fieldLabel}`, type: "text", value: search || '', onChange: (e) => setSearch(e.target.value) }),
+        React.createElement("input", { className: `${baseClass}__input`, placeholder: `Поиск: ${fieldLabel}`, type: "text", value: search || '', onChange: (e) => setSearch(e.target.value) }),
         React.createElement(Search, null)));
 };
 export default SearchFilter;
