@@ -47,5 +47,5 @@ export const EditModal = ({ slug, closeModal, relatedCollectionConfig, fieldSche
             React.createElement("div", null,
                 React.createElement(Form, { onSubmit: handleUpdateEditData, initialState: initialState },
                     React.createElement(RenderFields, { readOnly: false, fieldTypes: fieldTypes, fieldSchema: fieldSchema }),
-                    React.createElement(Submit, null, "Save changes"))))));
+                    React.createElement(Submit, null, "Сохранить изменения"))))));
 };

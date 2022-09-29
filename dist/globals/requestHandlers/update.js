@@ -1,10 +1,12 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const http_status_1 = __importDefault(require("http-status"));
-const update_1 = __importDefault(require("../operations/update"));
+'use strict';
+var __importDefault =
+    (this && this.__importDefault) ||
+    function (mod) {
+        return mod && mod.__esModule ? mod : { default: mod };
+    };
+Object.defineProperty(exports, '__esModule', { value: true });
+const http_status_1 = __importDefault(require('http-status'));
+const update_1 = __importDefault(require('../operations/update'));
 function updateHandler(globalConfig) {
     return async function handler(req, res, next) {
         try {
@@ -18,16 +20,15 @@ function updateHandler(globalConfig) {
                 depth: Number(req.query.depth),
                 data: req.body,
                 draft,
-                autosave,
+                autosave
             });
-            let message = 'Saved successfully.';
-            if (draft)
-                message = 'Draft saved successfully.';
-            if (autosave)
-                message = 'Autosaved successfully.';
-            return res.status(http_status_1.default.OK).json({ message, result });
-        }
-        catch (error) {
+            let message = 'Успешно сохранено.';
+            if (draft) message = 'Черновик успешно сохранён.';
+            if (autosave) message = 'Автосохранение успешно.';
+            return res
+                .status(http_status_1.default.OK)
+                .json({ message, result });
+        } catch (error) {
             return next(error);
         }
     };

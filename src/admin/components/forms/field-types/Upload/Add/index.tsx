@@ -63,7 +63,7 @@ const AddUploadModal: React.FC<Props> = (props) => {
                 {' '}
                 {collection.labels.singular}
               </h1>
-              <FormSubmit>Save</FormSubmit>
+              <FormSubmit>Сохранить</FormSubmit>
               <Button
                 icon="x"
                 round

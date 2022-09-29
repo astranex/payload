@@ -20,7 +20,7 @@ const sortOptions = (options) => options.sort((a, b) => {
 const optionsReducer = (state, action) => {
     switch (action.type) {
         case 'CLEAR': {
-            return action.required ? [] : [{ value: 'null', label: 'Ничего' }];
+            return action.required ? [] : [{ value: 'null', label: 'None' }];
         }
         case 'ADD': {
             const { hasMultipleRelations, collection, relation, data, sort, ids = [] } = action;
@@ -66,11 +66,10 @@ const optionsReducer = (state, action) => {
                     return [
                         ...docs,
                         {
-                            label:
-                                doc[labelKey] || `Без названия - ID: ${doc.id}`,
+                            label: doc[labelKey] || `Без названия - ID: ${doc.id}`,
                             relationTo: relation,
-                            value: doc.id
-                        }
+                            value: doc.id,
+                        },
                     ];
                 }
                 return docs;
@@ -78,9 +77,8 @@ const optionsReducer = (state, action) => {
             ids.forEach((id) => {
                 if (!loadedIDs.includes(id)) {
                     newSubOptions.push({
-                        label:
-                            labelKey === 'id' ? id : `Без названия - ID: ${id}`,
-                        value: id
+                        label: labelKey === 'id' ? id : `Untitled - ID: ${id}`,
+                        value: id,
                     });
                 }
             });

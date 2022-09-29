@@ -198,7 +198,7 @@ const DefaultGlobalView = (props) => {
                                                 React.createElement(
                                                     FormSubmit,
                                                     { buttonId: 'action-save' },
-                                                    'Save'
+                                                    'Сохранить'
                                                 )
                                         )
                                 ),

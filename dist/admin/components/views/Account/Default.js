@@ -179,7 +179,7 @@ const DefaultAccount = (props) => {
                                         React.createElement(
                                             FormSubmit,
                                             null,
-                                            'Save'
+                                            'Сохранить'
                                         )
                                 ),
                                 React.createElement(

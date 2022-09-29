@@ -6,33 +6,43 @@ import { Document } from '../../types';
 import update from '../operations/update';
 
 export type UpdateGlobalResult = Promise<Response<Document> | void>;
-export type UpdateGlobalResponse = (req: PayloadRequest, res: Response, next: NextFunction) => UpdateGlobalResult;
+export type UpdateGlobalResponse = (
+    req: PayloadRequest,
+    res: Response,
+    next: NextFunction
+) => UpdateGlobalResult;
 
-export default function updateHandler(globalConfig: SanitizedGlobalConfig): UpdateGlobalResponse {
-  return async function handler(req: PayloadRequest, res: Response, next: NextFunction) {
-    try {
-      const { slug } = globalConfig;
-      const draft = req.query.draft === 'true';
-      const autosave = req.query.autosave === 'true';
+export default function updateHandler(
+    globalConfig: SanitizedGlobalConfig
+): UpdateGlobalResponse {
+    return async function handler(
+        req: PayloadRequest,
+        res: Response,
+        next: NextFunction
+    ) {
+        try {
+            const { slug } = globalConfig;
+            const draft = req.query.draft === 'true';
+            const autosave = req.query.autosave === 'true';
 
-      const result = await update({
-        req,
-        globalConfig,
-        slug,
-        depth: Number(req.query.depth),
-        data: req.body,
-        draft,
-        autosave,
-      });
+            const result = await update({
+                req,
+                globalConfig,
+                slug,
+                depth: Number(req.query.depth),
+                data: req.body,
+                draft,
+                autosave
+            });
 
-      let message = 'Saved successfully.';
+            let message = 'Успешно сохранено.';
 
-      if (draft) message = 'Draft saved successfully.';
-      if (autosave) message = 'Autosaved successfully.';
+            if (draft) message = 'Черновик успешно сохранён.';
+            if (autosave) message = 'Автосохранение успешно.';
 
-      return res.status(httpStatus.OK).json({ message, result });
-    } catch (error) {
-      return next(error);
-    }
-  };
+            return res.status(httpStatus.OK).json({ message, result });
+        } catch (error) {
+            return next(error);
+        }
+    };
 }

@@ -289,7 +289,7 @@ const DefaultEditView = (props) => {
                                                 React.createElement(
                                                     FormSubmit,
                                                     { buttonId: 'action-save' },
-                                                    'Save'
+                                                    'Сохранить'
                                                 )
                                         )
                                 ),

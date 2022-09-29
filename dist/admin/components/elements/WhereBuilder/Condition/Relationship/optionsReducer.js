@@ -1,19 +1,14 @@
-const reduceToIDs = (options) => options.reduce((ids, option) => {
-    if (option.options) {
-        return [
-            ...ids,
-            ...reduceToIDs(option.options),
-        ];
-    }
-    return [
-        ...ids,
-        option.id,
-    ];
-}, []);
+const reduceToIDs = (options) =>
+    options.reduce((ids, option) => {
+        if (option.options) {
+            return [...ids, ...reduceToIDs(option.options)];
+        }
+        return [...ids, option.id];
+    }, []);
 const optionsReducer = (state, action) => {
     switch (action.type) {
         case 'CLEAR': {
-            return action.required ? [] : [{ value: 'null', label: 'Ничего' }];
+            return action.required ? [] : [{ value: 'null', label: 'None' }];
         }
         case 'ADD': {
             const { hasMultipleRelations, collection, relation, data } = action;
@@ -29,16 +24,18 @@ const optionsReducer = (state, action) => {
                                 ...docs,
                                 {
                                     label: doc[labelKey],
-                                    value: doc.id,
-                                },
+                                    value: doc.id
+                                }
                             ];
                         }
                         return docs;
-                    }, []),
+                    }, [])
                 ];
             }
             const newOptions = [...state];
-            const optionsToAddTo = newOptions.find((optionGroup) => optionGroup.label === collection.labels.plural);
+            const optionsToAddTo = newOptions.find(
+                (optionGroup) => optionGroup.label === collection.labels.plural
+            );
             const newSubOptions = data.docs.reduce((docs, doc) => {
                 if (loadedIDs.indexOf(doc.id) === -1) {
                     loadedIDs.push(doc.id);
@@ -47,8 +44,8 @@ const optionsReducer = (state, action) => {
                         {
                             label: doc[labelKey],
                             relationTo: relation,
-                            value: doc.id,
-                        },
+                            value: doc.id
+                        }
                     ];
                 }
                 return docs;
@@ -56,14 +53,13 @@ const optionsReducer = (state, action) => {
             if (optionsToAddTo) {
                 optionsToAddTo.options = [
                     ...optionsToAddTo.options,
-                    ...newSubOptions,
+                    ...newSubOptions
                 ];
-            }
-            else {
+            } else {
                 newOptions.push({
                     label: collection.labels.plural,
                     options: newSubOptions,
-                    value: undefined,
+                    value: undefined
                 });
             }
             return newOptions;

@@ -140,7 +140,7 @@ const DefaultAccount: React.FC<Props> = (props) => {
                                             data={data}
                                         />
                                         {hasSavePermission && (
-                                            <FormSubmit>Save</FormSubmit>
+                                            <FormSubmit>Сохранить</FormSubmit>
                                         )}
                                     </div>
                                     <div

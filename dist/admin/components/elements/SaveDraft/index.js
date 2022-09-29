@@ -7,7 +7,10 @@ import { useLocale } from '../../utilities/Locale';
 import './index.scss';
 const baseClass = 'save-draft';
 const SaveDraft = () => {
-    const { serverURL, routes: { api } } = useConfig();
+    const {
+        serverURL,
+        routes: { api }
+    } = useConfig();
     const { submit } = useForm();
     const { collection, global, id } = useDocumentInfo();
     const modified = useFormModified();
@@ -18,9 +21,10 @@ const SaveDraft = () => {
         let action;
         let method = 'POST';
         if (collection) {
-            action = `${serverURL}${api}/${collection.slug}${id ? `/${id}` : ''}${search}`;
-            if (id)
-                method = 'PATCH';
+            action = `${serverURL}${api}/${collection.slug}${
+                id ? `/${id}` : ''
+            }${search}`;
+            if (id) method = 'PATCH';
         }
         if (global) {
             action = `${serverURL}${api}/globals/${global.slug}${search}`;
@@ -30,10 +34,20 @@ const SaveDraft = () => {
             method,
             skipValidation: true,
             overrides: {
-                _status: 'draft',
-            },
+                _status: 'draft'
+            }
         });
     }, [submit, collection, global, serverURL, api, locale, id]);
-    return (React.createElement(FormSubmit, { className: baseClass, type: "button", buttonStyle: "secondary", onClick: saveDraft, disabled: !canSaveDraft }, "Save draft"));
+    return React.createElement(
+        FormSubmit,
+        {
+            className: baseClass,
+            type: 'button',
+            buttonStyle: 'secondary',
+            onClick: saveDraft,
+            disabled: !canSaveDraft
+        },
+        'Сохранить черновик'
+    );
 };
 export default SaveDraft;
