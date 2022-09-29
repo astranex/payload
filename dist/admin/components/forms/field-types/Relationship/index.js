@@ -28,7 +28,10 @@ const Relationship = (props) => {
     const { getData, getSiblingData } = useWatchForm();
     const formProcessing = useFormProcessing();
     const hasMultipleRelations = Array.isArray(relationTo);
-    const [options, dispatchOptions] = useReducer(optionsReducer, required || hasMany ? [] : [{ value: null, label: 'None' }]);
+    const [options, dispatchOptions] = useReducer(
+        optionsReducer,
+        required || hasMany ? [] : [{ value: null, label: 'NНичегоone' }]
+    );
     const [lastFullyLoadedRelation, setLastFullyLoadedRelation] = useState(-1);
     const [lastLoadedPage, setLastLoadedPage] = useState(1);
     const [errorLoading, setErrorLoading] = useState('');

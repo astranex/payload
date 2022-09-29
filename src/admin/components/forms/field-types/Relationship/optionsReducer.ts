@@ -24,7 +24,7 @@ const sortOptions = (options: Option[]): Option[] =>
 const optionsReducer = (state: Option[], action: Action): Option[] => {
     switch (action.type) {
         case 'CLEAR': {
-            return action.required ? [] : [{ value: 'null', label: 'None' }];
+            return action.required ? [] : [{ value: 'null', label: 'Ничего' }];
         }
 
         case 'ADD': {
