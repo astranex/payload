@@ -102,7 +102,7 @@ const EditView = (props) => {
                     if (dataToRender[useAsTitle]) {
                         label = dataToRender[useAsTitle];
                     } else {
-                        label = '[Untitled]';
+                        label = '[Без названия]';
                     }
                 } else {
                     label = dataToRender.id;

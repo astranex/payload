@@ -10,32 +10,28 @@ import './index.scss';
 const modalSlug = 'leave-without-saving';
 
 const LeaveWithoutSaving: React.FC = () => {
-  const modified = useFormModified();
-  const { user } = useAuth();
+    const modified = useFormModified();
+    const { user } = useAuth();
 
-  return (
-    <NavigationPrompt when={Boolean(modified && user)}>
-      {({ onConfirm, onCancel }) => (
-        <div className={modalSlug}>
-          <MinimalTemplate className={`${modalSlug}__template`}>
-            <h1>Leave without saving</h1>
-            <p>Your changes have not been saved. If you leave now, you will lose your changes.</p>
-            <Button
-              onClick={onCancel}
-              buttonStyle="secondary"
-            >
-              Stay on this page
-            </Button>
-            <Button
-              onClick={onConfirm}
-            >
-              Leave anyway
-            </Button>
-          </MinimalTemplate>
-        </div>
-      )}
-    </NavigationPrompt>
-  );
+    return (
+        <NavigationPrompt when={Boolean(modified && user)}>
+            {({ onConfirm, onCancel }) => (
+                <div className={modalSlug}>
+                    <MinimalTemplate className={`${modalSlug}__template`}>
+                        <h1>Уйти не сохранив?</h1>
+                        <p>
+                            Ваши изменения не были сохранены. Если вы уйдёте
+                            сейчас, вы потеряете свои изменения.
+                        </p>
+                        <Button onClick={onCancel} buttonStyle="secondary">
+                            Остаться на странице
+                        </Button>
+                        <Button onClick={onConfirm}>Уйти в любом случае</Button>
+                    </MinimalTemplate>
+                </div>
+            )}
+        </NavigationPrompt>
+    );
 };
 
 export default LeaveWithoutSaving;

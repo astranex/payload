@@ -9,11 +9,34 @@ const modalSlug = 'leave-without-saving';
 const LeaveWithoutSaving = () => {
     const modified = useFormModified();
     const { user } = useAuth();
-    return (React.createElement(NavigationPrompt, { when: Boolean(modified && user) }, ({ onConfirm, onCancel }) => (React.createElement("div", { className: modalSlug },
-        React.createElement(MinimalTemplate, { className: `${modalSlug}__template` },
-            React.createElement("h1", null, "Leave without saving"),
-            React.createElement("p", null, "Your changes have not been saved. If you leave now, you will lose your changes."),
-            React.createElement(Button, { onClick: onCancel, buttonStyle: "secondary" }, "Stay on this page"),
-            React.createElement(Button, { onClick: onConfirm }, "Leave anyway"))))));
+    return React.createElement(
+        NavigationPrompt,
+        { when: Boolean(modified && user) },
+        ({ onConfirm, onCancel }) =>
+            React.createElement(
+                'div',
+                { className: modalSlug },
+                React.createElement(
+                    MinimalTemplate,
+                    { className: `${modalSlug}__template` },
+                    React.createElement('h1', null, 'Уйти не сохранив?'),
+                    React.createElement(
+                        'p',
+                        null,
+                        'Ваши изменения не были сохранены. Если вы уйдёте сейчас, вы потеряете свои изменения.'
+                    ),
+                    React.createElement(
+                        Button,
+                        { onClick: onCancel, buttonStyle: 'secondary' },
+                        'Остаться на странице'
+                    ),
+                    React.createElement(
+                        Button,
+                        { onClick: onConfirm },
+                        'Уйти в любом случае'
+                    )
+                )
+            )
+    );
 };
 export default LeaveWithoutSaving;

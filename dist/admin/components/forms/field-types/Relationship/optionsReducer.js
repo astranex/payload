@@ -35,9 +35,11 @@ const optionsReducer = (state, action) => {
                             return [
                                 ...docs,
                                 {
-                                    label: doc[labelKey] || `Untitled - ID: ${doc.id}`,
-                                    value: doc.id,
-                                },
+                                    label:
+                                        doc[labelKey] ||
+                                        `Без названия - ID: ${doc.id}`,
+                                    value: doc.id
+                                }
                             ];
                         }
                         return docs;
@@ -46,8 +48,11 @@ const optionsReducer = (state, action) => {
                 ids.forEach((id) => {
                     if (!loadedIDs.includes(id)) {
                         options.push({
-                            label: labelKey === 'id' ? id : `Untitled - ID: ${id}`,
-                            value: id,
+                            label:
+                                labelKey === 'id'
+                                    ? id
+                                    : `Без названия - ID: ${id}`,
+                            value: id
                         });
                     }
                 });
@@ -61,10 +66,11 @@ const optionsReducer = (state, action) => {
                     return [
                         ...docs,
                         {
-                            label: doc[labelKey] || `Untitled - ID: ${doc.id}`,
+                            label:
+                                doc[labelKey] || `Без названия - ID: ${doc.id}`,
                             relationTo: relation,
-                            value: doc.id,
-                        },
+                            value: doc.id
+                        }
                     ];
                 }
                 return docs;
@@ -72,8 +78,9 @@ const optionsReducer = (state, action) => {
             ids.forEach((id) => {
                 if (!loadedIDs.includes(id)) {
                     newSubOptions.push({
-                        label: labelKey === 'id' ? id : `Untitled - ID: ${id}`,
-                        value: id,
+                        label:
+                            labelKey === 'id' ? id : `Без названия - ID: ${id}`,
+                        value: id
                     });
                 }
             });

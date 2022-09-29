@@ -58,7 +58,7 @@ const Versions = ({ collection, global }) => {
                         docLabel = doc[useAsTitle];
                     }
                     else {
-                        docLabel = '[Untitled]';
+                        docLabel = '[Без названия]';
                     }
                 }
                 else {
@@ -129,7 +129,9 @@ const Versions = ({ collection, global }) => {
     if (collection) {
         metaTitle = `Versions - ${doc[useAsTitle]} - ${entityLabel}`;
         metaDesc = `Viewing versions for the ${entityLabel} ${doc[useAsTitle]}`;
-        heading = (doc === null || doc === void 0 ? void 0 : doc[useAsTitle]) || '[Untitled]';
+        heading =
+            (doc === null || doc === void 0 ? void 0 : doc[useAsTitle]) ||
+            '[Без названия]';
     }
     if (global) {
         metaTitle = `Versions - ${entityLabel}`;

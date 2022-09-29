@@ -22,19 +22,17 @@ const UploadCard: React.FC<Props> = (props) => {
   ].filter(Boolean).join(' ');
 
   return (
-    <div
-      className={classes}
-      onClick={typeof onClick === 'function' ? onClick : undefined}
-    >
-      <Thumbnail
-        size="expand"
-        doc={doc}
-        collection={collection}
-      />
-      <div className={`${baseClass}__filename`}>
-        {typeof doc?.filename === 'string' ? doc?.filename : '[Untitled]'}
+      <div
+          className={classes}
+          onClick={typeof onClick === 'function' ? onClick : undefined}
+      >
+          <Thumbnail size="expand" doc={doc} collection={collection} />
+          <div className={`${baseClass}__filename`}>
+              {typeof doc?.filename === 'string'
+                  ? doc?.filename
+                  : '[Без названия]'}
+          </div>
       </div>
-    </div>
   );
 };
 

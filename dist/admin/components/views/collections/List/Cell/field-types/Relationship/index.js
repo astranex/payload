@@ -38,11 +38,17 @@ const RelationshipCell = (props) => {
         values.map(({ relationTo, value }, i) => {
             const document = documents[relationTo][value];
             const relatedCollection = collections.find(({ slug }) => slug === relationTo);
-            return (React.createElement(React.Fragment, { key: i },
-                document === false && `Untitled - ID: ${value}`,
+            return React.createElement(
+                React.Fragment,
+                { key: i },
+                document === false && `Без названия - ID: ${value}`,
                 document === null && 'Loading...',
-                document && (document[relatedCollection.admin.useAsTitle] ? document[relatedCollection.admin.useAsTitle] : `Untitled - ID: ${value}`),
-                values.length > i + 1 && ', '));
+                document &&
+                    (document[relatedCollection.admin.useAsTitle]
+                        ? document[relatedCollection.admin.useAsTitle]
+                        : `Без названия - ID: ${value}`),
+                values.length > i + 1 && ', '
+            );
         }),
         Array.isArray(cellData) && cellData.length > totalToShow && ` and ${cellData.length - totalToShow} more`,
         values.length === 0 && `No <${field.label}>`));

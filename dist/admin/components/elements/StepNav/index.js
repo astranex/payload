@@ -18,7 +18,11 @@ const StepNavProvider = ({ children }) => {
 };
 const useStepNav = () => useContext(Context);
 const StepNav = () => {
-    const dashboardLabel = React.createElement('span', null, 'Dashboard');
+    const dashboardLabel = React.createElement(
+        'span',
+        null,
+        'Панель управления'
+    );
     const { stepNav } = useStepNav();
     return React.createElement(
         'nav',

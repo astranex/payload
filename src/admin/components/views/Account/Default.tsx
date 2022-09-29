@@ -80,7 +80,7 @@ const DefaultAccount: React.FC<Props> = (props) => {
                                             {...{
                                                 data,
                                                 useAsTitle,
-                                                fallback: '[Untitled]'
+                                                fallback: '[Без названия]'
                                             }}
                                         />
                                     </h1>

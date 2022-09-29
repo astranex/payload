@@ -79,7 +79,7 @@ const VersionView = ({ collection, global }) => {
                         }
                     }
                     else {
-                        docLabel = '[Untitled]';
+                        docLabel = '[Без названия]';
                     }
                 }
                 else {

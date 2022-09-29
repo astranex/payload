@@ -16,25 +16,22 @@ const SectionTitle: React.FC<Props> = (props) => {
   ].filter(Boolean).join(' ');
 
   return (
-    <div
-      className={classes}
-      data-value={value}
-    >
-      <input
-        className={`${baseClass}__input`}
-        id={path}
-        value={value as string || ''}
-        placeholder="Untitled"
-        type="text"
-        name={path}
-        onChange={(e) => {
-          e.stopPropagation();
-          e.preventDefault();
-          setValue(e.target.value);
-        }}
-        readOnly={readOnly}
-      />
-    </div>
+      <div className={classes} data-value={value}>
+          <input
+              className={`${baseClass}__input`}
+              id={path}
+              value={(value as string) || ''}
+              placeholder="Без названия"
+              type="text"
+              name={path}
+              onChange={(e) => {
+                  e.stopPropagation();
+                  e.preventDefault();
+                  setValue(e.target.value);
+              }}
+              readOnly={readOnly}
+          />
+      </div>
   );
 };
 

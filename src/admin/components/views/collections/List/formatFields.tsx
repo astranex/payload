@@ -43,7 +43,7 @@ const formatFields = (config: SanitizedCollectionConfig): Field[] => {
         fields = fields.concat([
             {
                 name: 'filename',
-                label: 'Filename',
+                label: 'Имя файла',
                 type: 'text'
             }
         ]);
