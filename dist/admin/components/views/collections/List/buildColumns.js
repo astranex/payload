@@ -4,24 +4,27 @@ import SortColumn from '../../../elements/SortColumn';
 import { fieldIsPresentationalOnly } from '../../../../../fields/config/types';
 import flattenFields from '../../../../../utilities/flattenTopLevelFields';
 const buildColumns = (collection, columns) => {
-    const flattenedFields = flattenFields([
-        ...collection.fields,
-        {
-            name: 'id',
-            type: 'text',
-            label: 'ID',
-        },
-        {
-            name: 'updatedAt',
-            type: 'date',
-            label: 'Updated At',
-        },
-        {
-            name: 'createdAt',
-            type: 'date',
-            label: 'Created At',
-        },
-    ], true);
+    const flattenedFields = flattenFields(
+        [
+            ...collection.fields,
+            {
+                name: 'id',
+                type: 'text',
+                label: 'ID'
+            },
+            {
+                name: 'updatedAt',
+                type: 'date',
+                label: 'Дата обновления'
+            },
+            {
+                name: 'createdAt',
+                type: 'date',
+                label: 'Дата создания'
+            }
+        ],
+        true
+    );
     return (columns || []).reduce((cols, col, colIndex) => {
         let field = null;
         flattenedFields.forEach((fieldToCheck) => {
@@ -35,10 +38,25 @@ const buildColumns = (collection, columns) => {
                 {
                     accessor: field.name,
                     components: {
-                        Heading: (React.createElement(SortColumn, { label: field.label || field.name, name: field.name, disable: (field.disableSort || fieldIsPresentationalOnly(field)) || undefined })),
-                        renderCell: (rowData, cellData) => (React.createElement(Cell, { key: JSON.stringify(cellData), field: field, colIndex: colIndex, collection: collection, rowData: rowData, cellData: cellData })),
-                    },
-                },
+                        Heading: React.createElement(SortColumn, {
+                            label: field.label || field.name,
+                            name: field.name,
+                            disable:
+                                field.disableSort ||
+                                fieldIsPresentationalOnly(field) ||
+                                undefined
+                        }),
+                        renderCell: (rowData, cellData) =>
+                            React.createElement(Cell, {
+                                key: JSON.stringify(cellData),
+                                field: field,
+                                colIndex: colIndex,
+                                collection: collection,
+                                rowData: rowData,
+                                cellData: cellData
+                            })
+                    }
+                }
             ];
         }
         return cols;

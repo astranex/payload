@@ -15,13 +15,14 @@ const formatFields = (config) => {
         fields = fields.concat([
             {
                 name: 'createdAt',
-                label: 'Created At',
-                type: 'date',
-            }, {
-                name: 'updatedAt',
-                label: 'Updated At',
-                type: 'date',
+                label: 'Дата создания',
+                type: 'date'
             },
+            {
+                name: 'updatedAt',
+                label: 'Дата обновления',
+                type: 'date'
+            }
         ]);
     }
     if (config.upload) {

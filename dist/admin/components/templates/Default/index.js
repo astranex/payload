@@ -13,9 +13,23 @@ const Default = ({ children, className }) => {
         baseClass,
         className,
     ].filter(Boolean).join(' ');
-    return (React.createElement("div", { className: classes },
-        React.createElement(Meta, { title: "Dashboard", description: "Dashboard for Payload CMS", keywords: "Dashboard, Payload, CMS" }),
-        React.createElement(RenderCustomComponent, { DefaultComponent: DefaultNav, CustomComponent: CustomNav }),
-        React.createElement("div", { className: `${baseClass}__wrap` }, children)));
+    return React.createElement(
+        'div',
+        { className: classes },
+        React.createElement(Meta, {
+            title: 'Панель управления',
+            description: 'Панель управления Payload CMS',
+            keywords: 'Панель управления, Payload, CMS'
+        }),
+        React.createElement(RenderCustomComponent, {
+            DefaultComponent: DefaultNav,
+            CustomComponent: CustomNav
+        }),
+        React.createElement(
+            'div',
+            { className: `${baseClass}__wrap` },
+            children
+        )
+    );
 };
 export default Default;

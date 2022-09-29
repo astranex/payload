@@ -26,20 +26,18 @@ const Default: React.FC<Props> = ({ children, className }) => {
   ].filter(Boolean).join(' ');
 
   return (
-    <div className={classes}>
-      <Meta
-        title="Dashboard"
-        description="Dashboard for Payload CMS"
-        keywords="Dashboard, Payload, CMS"
-      />
-      <RenderCustomComponent
-        DefaultComponent={DefaultNav}
-        CustomComponent={CustomNav}
-      />
-      <div className={`${baseClass}__wrap`}>
-        {children}
+      <div className={classes}>
+          <Meta
+              title="Панель управления"
+              description="Панель управления Payload CMS"
+              keywords="Панель управления, Payload, CMS"
+          />
+          <RenderCustomComponent
+              DefaultComponent={DefaultNav}
+              CustomComponent={CustomNav}
+          />
+          <div className={`${baseClass}__wrap`}>{children}</div>
       </div>
-    </div>
   );
 };
 

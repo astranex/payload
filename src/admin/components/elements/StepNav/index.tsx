@@ -26,7 +26,7 @@ const StepNavProvider: React.FC<{children?: React.ReactNode}> = ({ children }) =
 const useStepNav = (): ContextType => useContext(Context);
 
 const StepNav: React.FC = () => {
-  const dashboardLabel = <span>Dashboard</span>;
+  const dashboardLabel = <span>Панель управления</span>;
   const { stepNav } = useStepNav();
 
   return (
