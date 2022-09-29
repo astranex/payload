@@ -1,0 +1,14 @@
+@import '../../../scss/styles';
+
+.field-error.tooltip {
+  top: 0;
+  bottom: auto;
+  left: auto;
+  right: base(.5);
+  transform: none;
+  background-color: var(--theme-error-500);
+
+  span {
+    border-top-color: var(--theme-error-500);
+  }
+}

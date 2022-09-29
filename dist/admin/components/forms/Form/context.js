@@ -1,0 +1,25 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.useFormModified = exports.useFormProcessing = exports.useFormSubmitted = exports.useWatchForm = exports.useForm = exports.ModifiedContext = exports.ProcessingContext = exports.SubmittedContext = exports.FormWatchContext = exports.FormContext = void 0;
+const react_1 = require("react");
+const FormContext = (0, react_1.createContext)({});
+exports.FormContext = FormContext;
+const FormWatchContext = (0, react_1.createContext)({});
+exports.FormWatchContext = FormWatchContext;
+const SubmittedContext = (0, react_1.createContext)(false);
+exports.SubmittedContext = SubmittedContext;
+const ProcessingContext = (0, react_1.createContext)(false);
+exports.ProcessingContext = ProcessingContext;
+const ModifiedContext = (0, react_1.createContext)(false);
+exports.ModifiedContext = ModifiedContext;
+const useForm = () => (0, react_1.useContext)(FormContext);
+exports.useForm = useForm;
+const useWatchForm = () => (0, react_1.useContext)(FormWatchContext);
+exports.useWatchForm = useWatchForm;
+const useFormSubmitted = () => (0, react_1.useContext)(SubmittedContext);
+exports.useFormSubmitted = useFormSubmitted;
+const useFormProcessing = () => (0, react_1.useContext)(ProcessingContext);
+exports.useFormProcessing = useFormProcessing;
+const useFormModified = () => (0, react_1.useContext)(ModifiedContext);
+exports.useFormModified = useFormModified;
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiY29udGV4dC5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3NyYy9hZG1pbi9jb21wb25lbnRzL2Zvcm1zL0Zvcm0vY29udGV4dC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiOzs7QUFBQSxpQ0FBa0Q7QUFHbEQsTUFBTSxXQUFXLEdBQUcsSUFBQSxxQkFBYSxFQUFDLEVBQWEsQ0FBQyxDQUFDO0FBYS9DLGtDQUFXO0FBWmIsTUFBTSxnQkFBZ0IsR0FBRyxJQUFBLHFCQUFhLEVBQUMsRUFBYSxDQUFDLENBQUM7QUFhcEQsNENBQWdCO0FBWmxCLE1BQU0sZ0JBQWdCLEdBQUcsSUFBQSxxQkFBYSxFQUFDLEtBQUssQ0FBQyxDQUFDO0FBYTVDLDRDQUFnQjtBQVpsQixNQUFNLGlCQUFpQixHQUFHLElBQUEscUJBQWEsRUFBQyxLQUFLLENBQUMsQ0FBQztBQWE3Qyw4Q0FBaUI7QUFabkIsTUFBTSxlQUFlLEdBQUcsSUFBQSxxQkFBYSxFQUFDLEtBQUssQ0FBQyxDQUFDO0FBYTNDLDBDQUFlO0FBWGpCLE1BQU0sT0FBTyxHQUFHLEdBQVksRUFBRSxDQUFDLElBQUEsa0JBQVUsRUFBQyxXQUFXLENBQUMsQ0FBQztBQVlyRCwwQkFBTztBQVhULE1BQU0sWUFBWSxHQUFHLEdBQVksRUFBRSxDQUFDLElBQUEsa0JBQVUsRUFBQyxnQkFBZ0IsQ0FBQyxDQUFDO0FBWS9ELG9DQUFZO0FBWGQsTUFBTSxnQkFBZ0IsR0FBRyxHQUFZLEVBQUUsQ0FBQyxJQUFBLGtCQUFVLEVBQUMsZ0JBQWdCLENBQUMsQ0FBQztBQVluRSw0Q0FBZ0I7QUFYbEIsTUFBTSxpQkFBaUIsR0FBRyxHQUFZLEVBQUUsQ0FBQyxJQUFBLGtCQUFVLEVBQUMsaUJBQWlCLENBQUMsQ0FBQztBQVlyRSw4Q0FBaUI7QUFYbkIsTUFBTSxlQUFlLEdBQUcsR0FBWSxFQUFFLENBQUMsSUFBQSxrQkFBVSxFQUFDLGVBQWUsQ0FBQyxDQUFDO0FBWWpFLDBDQUFlIn0=
