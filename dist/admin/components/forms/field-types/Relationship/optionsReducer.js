@@ -20,7 +20,7 @@ const sortOptions = (options) => options.sort((a, b) => {
 const optionsReducer = (state, action) => {
     switch (action.type) {
         case 'CLEAR': {
-            return action.required ? [] : [{ value: 'null', label: 'None' }];
+            return action.required ? [] : [{ value: 'null', label: 'Ничего' }];
         }
         case 'ADD': {
             const { hasMultipleRelations, collection, relation, data, sort, ids = [] } = action;

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useReducer, } from 'react';
+import React, { useCallback, useEffect, useState, useReducer } from 'react';
 import equal from 'deep-equal';
 import qs from 'qs';
 import { useConfig } from '../../../utilities/Config';
@@ -21,8 +21,30 @@ import './index.scss';
 const maxResultsPerRequest = 10;
 const baseClass = 'relationship';
 const Relationship = (props) => {
-    const { relationTo, validate = relationship, path, name, required, label, hasMany, filterOptions, admin: { readOnly, style, className, width, description, condition, isSortable, } = {}, } = props;
-    const { serverURL, routes: { api, }, collections, } = useConfig();
+    const {
+        relationTo,
+        validate = relationship,
+        path,
+        name,
+        required,
+        label,
+        hasMany,
+        filterOptions,
+        admin: {
+            readOnly,
+            style,
+            className,
+            width,
+            description,
+            condition,
+            isSortable
+        } = {}
+    } = props;
+    const {
+        serverURL,
+        routes: { api },
+        collections
+    } = useConfig();
     const { id } = useDocumentInfo();
     const { user, permissions } = useAuth();
     const { getData, getSiblingData } = useWatchForm();
@@ -30,7 +52,7 @@ const Relationship = (props) => {
     const hasMultipleRelations = Array.isArray(relationTo);
     const [options, dispatchOptions] = useReducer(
         optionsReducer,
-        required || hasMany ? [] : [{ value: null, label: 'NНичегоone' }]
+        required || hasMany ? [] : [{ value: null, label: 'Ничего' }]
     );
     const [lastFullyLoadedRelation, setLastFullyLoadedRelation] = useState(-1);
     const [lastLoadedPage, setLastLoadedPage] = useState(1);
@@ -38,96 +60,163 @@ const Relationship = (props) => {
     const [optionFilters, setOptionFilters] = useState();
     const [hasLoadedValueOptions, setHasLoadedValueOptions] = useState(false);
     const [search, setSearch] = useState('');
-    const [enableWordBoundarySearch, setEnableWordBoundarySearch] = useState(false);
-    const memoizedValidate = useCallback((value, validationOptions) => {
-        return validate(value, { ...validationOptions, required });
-    }, [validate, required]);
-    const { value, showError, errorMessage, setValue, initialValue, } = useField({
-        path: path || name,
-        validate: memoizedValidate,
-        condition,
-    });
-    const getResults = useCallback(async ({ lastFullyLoadedRelation: lastFullyLoadedRelationArg, lastLoadedPage: lastLoadedPageArg, search: searchArg, value: valueArg, sort, }) => {
-        if (!permissions) {
-            return;
+    const [enableWordBoundarySearch, setEnableWordBoundarySearch] =
+        useState(false);
+    const memoizedValidate = useCallback(
+        (value, validationOptions) => {
+            return validate(value, { ...validationOptions, required });
+        },
+        [validate, required]
+    );
+    const { value, showError, errorMessage, setValue, initialValue } = useField(
+        {
+            path: path || name,
+            validate: memoizedValidate,
+            condition
         }
-        let lastLoadedPageToUse = typeof lastLoadedPageArg !== 'undefined' ? lastLoadedPageArg : 1;
-        const lastFullyLoadedRelationToUse = typeof lastFullyLoadedRelationArg !== 'undefined' ? lastFullyLoadedRelationArg : -1;
-        const relations = Array.isArray(relationTo) ? relationTo : [relationTo];
-        const relationsToFetch = lastFullyLoadedRelationToUse === -1 ? relations : relations.slice(lastFullyLoadedRelationToUse + 1);
-        let resultsFetched = 0;
-        const relationMap = createRelationMap({ hasMany, relationTo, value: valueArg });
-        if (!errorLoading) {
-            relationsToFetch.reduce(async (priorRelation, relation) => {
-                var _a;
-                await priorRelation;
-                if (resultsFetched < 10) {
-                    const collection = collections.find((coll) => coll.slug === relation);
-                    const fieldToSearch = ((_a = collection === null || collection === void 0 ? void 0 : collection.admin) === null || _a === void 0 ? void 0 : _a.useAsTitle) || 'id';
-                    const query = {
-                        where: {
-                            and: [
-                                {
-                                    id: {
-                                        not_in: relationMap[relation],
-                                    },
-                                },
-                            ],
-                        },
-                        limit: maxResultsPerRequest,
-                        page: lastLoadedPageToUse,
-                        sort: fieldToSearch,
-                        depth: 0,
-                    };
-                    if (searchArg) {
-                        query.where.and.push({
-                            [fieldToSearch]: {
-                                like: searchArg,
+    );
+    const getResults = useCallback(
+        async ({
+            lastFullyLoadedRelation: lastFullyLoadedRelationArg,
+            lastLoadedPage: lastLoadedPageArg,
+            search: searchArg,
+            value: valueArg,
+            sort
+        }) => {
+            if (!permissions) {
+                return;
+            }
+            let lastLoadedPageToUse =
+                typeof lastLoadedPageArg !== 'undefined'
+                    ? lastLoadedPageArg
+                    : 1;
+            const lastFullyLoadedRelationToUse =
+                typeof lastFullyLoadedRelationArg !== 'undefined'
+                    ? lastFullyLoadedRelationArg
+                    : -1;
+            const relations = Array.isArray(relationTo)
+                ? relationTo
+                : [relationTo];
+            const relationsToFetch =
+                lastFullyLoadedRelationToUse === -1
+                    ? relations
+                    : relations.slice(lastFullyLoadedRelationToUse + 1);
+            let resultsFetched = 0;
+            const relationMap = createRelationMap({
+                hasMany,
+                relationTo,
+                value: valueArg
+            });
+            if (!errorLoading) {
+                relationsToFetch.reduce(async (priorRelation, relation) => {
+                    var _a;
+                    await priorRelation;
+                    if (resultsFetched < 10) {
+                        const collection = collections.find(
+                            (coll) => coll.slug === relation
+                        );
+                        const fieldToSearch =
+                            ((_a =
+                                collection === null || collection === void 0
+                                    ? void 0
+                                    : collection.admin) === null ||
+                            _a === void 0
+                                ? void 0
+                                : _a.useAsTitle) || 'id';
+                        const query = {
+                            where: {
+                                and: [
+                                    {
+                                        id: {
+                                            not_in: relationMap[relation]
+                                        }
+                                    }
+                                ]
                             },
-                        });
-                    }
-                    if (optionFilters === null || optionFilters === void 0 ? void 0 : optionFilters[relation]) {
-                        query.where.and.push(optionFilters[relation]);
-                    }
-                    const response = await fetch(`${serverURL}${api}/${relation}?${qs.stringify(query)}`);
-                    if (response.ok) {
-                        const data = await response.json();
-                        if (data.docs.length > 0) {
-                            resultsFetched += data.docs.length;
-                            dispatchOptions({ type: 'ADD', data, relation, hasMultipleRelations, collection, sort });
-                            setLastLoadedPage(data.page);
-                            if (!data.nextPage) {
-                                setLastFullyLoadedRelation(relations.indexOf(relation));
-                                // If there are more relations to search, need to reset lastLoadedPage to 1
-                                // both locally within function and state
-                                if (relations.indexOf(relation) + 1 < relations.length) {
-                                    lastLoadedPageToUse = 1;
+                            limit: maxResultsPerRequest,
+                            page: lastLoadedPageToUse,
+                            sort: fieldToSearch,
+                            depth: 0
+                        };
+                        if (searchArg) {
+                            query.where.and.push({
+                                [fieldToSearch]: {
+                                    like: searchArg
+                                }
+                            });
+                        }
+                        if (
+                            optionFilters === null || optionFilters === void 0
+                                ? void 0
+                                : optionFilters[relation]
+                        ) {
+                            query.where.and.push(optionFilters[relation]);
+                        }
+                        const response = await fetch(
+                            `${serverURL}${api}/${relation}?${qs.stringify(
+                                query
+                            )}`
+                        );
+                        if (response.ok) {
+                            const data = await response.json();
+                            if (data.docs.length > 0) {
+                                resultsFetched += data.docs.length;
+                                dispatchOptions({
+                                    type: 'ADD',
+                                    data,
+                                    relation,
+                                    hasMultipleRelations,
+                                    collection,
+                                    sort
+                                });
+                                setLastLoadedPage(data.page);
+                                if (!data.nextPage) {
+                                    setLastFullyLoadedRelation(
+                                        relations.indexOf(relation)
+                                    );
+                                    // If there are more relations to search, need to reset lastLoadedPage to 1
+                                    // both locally within function and state
+                                    if (
+                                        relations.indexOf(relation) + 1 <
+                                        relations.length
+                                    ) {
+                                        lastLoadedPageToUse = 1;
+                                    }
                                 }
                             }
+                        } else if (response.status === 403) {
+                            setLastFullyLoadedRelation(
+                                relations.indexOf(relation)
+                            );
+                            lastLoadedPageToUse = 1;
+                            dispatchOptions({
+                                type: 'ADD',
+                                data: { docs: [] },
+                                relation,
+                                hasMultipleRelations,
+                                collection,
+                                sort,
+                                ids: relationMap[relation]
+                            });
+                        } else {
+                            setErrorLoading('An error has occurred.');
                         }
                     }
-                    else if (response.status === 403) {
-                        setLastFullyLoadedRelation(relations.indexOf(relation));
-                        lastLoadedPageToUse = 1;
-                        dispatchOptions({ type: 'ADD', data: { docs: [] }, relation, hasMultipleRelations, collection, sort, ids: relationMap[relation] });
-                    }
-                    else {
-                        setErrorLoading('An error has occurred.');
-                    }
-                }
-            }, Promise.resolve());
-        }
-    }, [
-        permissions,
-        relationTo,
-        hasMany,
-        errorLoading,
-        collections,
-        optionFilters,
-        serverURL,
-        api,
-        hasMultipleRelations,
-    ]);
+                }, Promise.resolve());
+            }
+        },
+        [
+            permissions,
+            relationTo,
+            hasMany,
+            errorLoading,
+            collections,
+            optionFilters,
+            serverURL,
+            api,
+            hasMultipleRelations
+        ]
+    );
     const findOptionsByValue = useCallback(() => {
         if (value) {
             if (hasMany) {
@@ -138,7 +227,12 @@ const Relationship = (props) => {
                             options.forEach((opt) => {
                                 if (opt.options) {
                                     opt.options.some((subOpt) => {
-                                        if ((subOpt === null || subOpt === void 0 ? void 0 : subOpt.value) === val.value) {
+                                        if (
+                                            (subOpt === null ||
+                                            subOpt === void 0
+                                                ? void 0
+                                                : subOpt.value) === val.value
+                                        ) {
                                             matchedOption = subOpt;
                                             return true;
                                         }
@@ -159,7 +253,11 @@ const Relationship = (props) => {
                 options.forEach((opt) => {
                     if (opt === null || opt === void 0 ? void 0 : opt.options) {
                         opt.options.some((subOpt) => {
-                            if ((subOpt === null || subOpt === void 0 ? void 0 : subOpt.value) === valueWithRelation.value) {
+                            if (
+                                (subOpt === null || subOpt === void 0
+                                    ? void 0
+                                    : subOpt.value) === valueWithRelation.value
+                            ) {
                                 matchedOption = subOpt;
                                 return true;
                             }
@@ -173,10 +271,13 @@ const Relationship = (props) => {
         }
         return undefined;
     }, [hasMany, hasMultipleRelations, value, options]);
-    const updateSearch = useDebouncedCallback((searchArg, valueArg) => {
-        getResults({ search: searchArg, value: valueArg, sort: true });
-        setSearch(searchArg);
-    }, [getResults]);
+    const updateSearch = useDebouncedCallback(
+        (searchArg, valueArg) => {
+            getResults({ search: searchArg, value: valueArg, sort: true });
+            setSearch(searchArg);
+        },
+        [getResults]
+    );
     const handleInputChange = (searchArg, valueArg) => {
         if (search !== searchArg) {
             updateSearch(searchArg, valueArg);
@@ -190,36 +291,70 @@ const Relationship = (props) => {
             const relationMap = createRelationMap({
                 hasMany,
                 relationTo,
-                value: initialValue,
+                value: initialValue
             });
-            Object.entries(relationMap).reduce(async (priorRelation, [relation, ids]) => {
-                await priorRelation;
-                if (ids.length > 0) {
-                    const query = {
-                        where: {
-                            id: {
-                                in: ids,
+            Object.entries(relationMap).reduce(
+                async (priorRelation, [relation, ids]) => {
+                    await priorRelation;
+                    if (ids.length > 0) {
+                        const query = {
+                            where: {
+                                id: {
+                                    in: ids
+                                }
                             },
-                        },
-                        depth: 0,
-                        limit: ids.length,
-                    };
-                    if (!errorLoading) {
-                        const response = await fetch(`${serverURL}${api}/${relation}?${qs.stringify(query)}`);
-                        const collection = collections.find((coll) => coll.slug === relation);
-                        if (response.ok) {
-                            const data = await response.json();
-                            dispatchOptions({ type: 'ADD', data, relation, hasMultipleRelations, collection, sort: true, ids });
-                        }
-                        else if (response.status === 403) {
-                            dispatchOptions({ type: 'ADD', data: { docs: [] }, relation, hasMultipleRelations, collection, sort: true, ids });
+                            depth: 0,
+                            limit: ids.length
+                        };
+                        if (!errorLoading) {
+                            const response = await fetch(
+                                `${serverURL}${api}/${relation}?${qs.stringify(
+                                    query
+                                )}`
+                            );
+                            const collection = collections.find(
+                                (coll) => coll.slug === relation
+                            );
+                            if (response.ok) {
+                                const data = await response.json();
+                                dispatchOptions({
+                                    type: 'ADD',
+                                    data,
+                                    relation,
+                                    hasMultipleRelations,
+                                    collection,
+                                    sort: true,
+                                    ids
+                                });
+                            } else if (response.status === 403) {
+                                dispatchOptions({
+                                    type: 'ADD',
+                                    data: { docs: [] },
+                                    relation,
+                                    hasMultipleRelations,
+                                    collection,
+                                    sort: true,
+                                    ids
+                                });
+                            }
                         }
                     }
-                }
-            }, Promise.resolve());
+                },
+                Promise.resolve()
+            );
             setHasLoadedValueOptions(true);
         }
-    }, [hasMany, hasMultipleRelations, relationTo, initialValue, hasLoadedValueOptions, errorLoading, collections, api, serverURL]);
+    }, [
+        hasMany,
+        hasMultipleRelations,
+        relationTo,
+        initialValue,
+        hasLoadedValueOptions,
+        errorLoading,
+        collections,
+        api,
+        serverURL
+    ]);
     useEffect(() => {
         if (!filterOptions) {
             return;
@@ -229,17 +364,26 @@ const Relationship = (props) => {
             data: getData(),
             relationTo,
             siblingData: getSiblingData(path),
-            user,
+            user
         });
         if (!equal(newOptionFilters, optionFilters)) {
             setOptionFilters(newOptionFilters);
         }
-    }, [relationTo, filterOptions, optionFilters, id, getData, getSiblingData, path, user]);
+    }, [
+        relationTo,
+        filterOptions,
+        optionFilters,
+        id,
+        getData,
+        getSiblingData,
+        path,
+        user
+    ]);
     useEffect(() => {
         if (optionFilters || !filterOptions) {
             setHasLoadedValueOptions(false);
             getResults({
-                value: initialValue,
+                value: initialValue
             });
         }
     }, [initialValue, getResults, optionFilters, filterOptions]);
@@ -248,8 +392,16 @@ const Relationship = (props) => {
         const relations = Array.isArray(relationTo) ? relationTo : [relationTo];
         const isIdOnly = relations.reduce((idOnly, relation) => {
             var _a;
-            const collection = collections.find((coll) => coll.slug === relation);
-            const fieldToSearch = ((_a = collection === null || collection === void 0 ? void 0 : collection.admin) === null || _a === void 0 ? void 0 : _a.useAsTitle) || 'id';
+            const collection = collections.find(
+                (coll) => coll.slug === relation
+            );
+            const fieldToSearch =
+                ((_a =
+                    collection === null || collection === void 0
+                        ? void 0
+                        : collection.admin) === null || _a === void 0
+                    ? void 0
+                    : _a.useAsTitle) || 'id';
             return fieldToSearch === 'id' && idOnly;
         }, true);
         setEnableWordBoundarySearch(!isIdOnly);
@@ -260,51 +412,100 @@ const Relationship = (props) => {
         className,
         showError && 'error',
         errorLoading && 'error-loading',
-        readOnly && `${baseClass}--read-only`,
-    ].filter(Boolean).join(' ');
-    const valueToRender = (findOptionsByValue() || value);
-    if ((valueToRender === null || valueToRender === void 0 ? void 0 : valueToRender.value) === 'null')
+        readOnly && `${baseClass}--read-only`
+    ]
+        .filter(Boolean)
+        .join(' ');
+    const valueToRender = findOptionsByValue() || value;
+    if (
+        (valueToRender === null || valueToRender === void 0
+            ? void 0
+            : valueToRender.value) === 'null'
+    )
         valueToRender.value = null;
-    return (React.createElement("div", { id: `field-${(path || name).replace(/\./gi, '__')}`, className: classes, style: {
-            ...style,
-            width,
-        } },
-        React.createElement(Error, { showError: showError, message: errorMessage }),
-        React.createElement(Label, { htmlFor: path, label: label, required: required }),
-        !errorLoading && (React.createElement(ReactSelect, { isDisabled: readOnly, onInputChange: (newSearch) => handleInputChange(newSearch, value), onChange: !readOnly ? (selected) => {
-                if (hasMany) {
-                    setValue(selected ? selected.map((option) => {
-                        if (hasMultipleRelations) {
-                            return {
-                                relationTo: option.relationTo,
-                                value: option.value,
-                            };
-                        }
-                        return option.value;
-                    }) : null);
-                }
-                else if (hasMultipleRelations) {
-                    setValue({
-                        relationTo: selected.relationTo,
-                        value: selected.value,
+    return React.createElement(
+        'div',
+        {
+            id: `field-${(path || name).replace(/\./gi, '__')}`,
+            className: classes,
+            style: {
+                ...style,
+                width
+            }
+        },
+        React.createElement(Error, {
+            showError: showError,
+            message: errorMessage
+        }),
+        React.createElement(Label, {
+            htmlFor: path,
+            label: label,
+            required: required
+        }),
+        !errorLoading &&
+            React.createElement(ReactSelect, {
+                isDisabled: readOnly,
+                onInputChange: (newSearch) =>
+                    handleInputChange(newSearch, value),
+                onChange: !readOnly
+                    ? (selected) => {
+                          if (hasMany) {
+                              setValue(
+                                  selected
+                                      ? selected.map((option) => {
+                                            if (hasMultipleRelations) {
+                                                return {
+                                                    relationTo:
+                                                        option.relationTo,
+                                                    value: option.value
+                                                };
+                                            }
+                                            return option.value;
+                                        })
+                                      : null
+                              );
+                          } else if (hasMultipleRelations) {
+                              setValue({
+                                  relationTo: selected.relationTo,
+                                  value: selected.value
+                              });
+                          } else {
+                              setValue(selected.value);
+                          }
+                      }
+                    : undefined,
+                onMenuScrollToBottom: () => {
+                    getResults({
+                        lastFullyLoadedRelation,
+                        lastLoadedPage: lastLoadedPage + 1,
+                        search,
+                        value: initialValue,
+                        sort: false
                     });
-                }
-                else {
-                    setValue(selected.value);
-                }
-            } : undefined, onMenuScrollToBottom: () => {
-                getResults({
-                    lastFullyLoadedRelation,
-                    lastLoadedPage: lastLoadedPage + 1,
-                    search,
-                    value: initialValue,
-                    sort: false,
-                });
-            }, value: valueToRender, showError: showError, disabled: formProcessing, options: options, isMulti: hasMany, isSortable: isSortable, filterOption: enableWordBoundarySearch ? (item, searchFilter) => {
-                const r = wordBoundariesRegex(searchFilter || '');
-                return r.test(item.label);
-            } : undefined })),
-        errorLoading && (React.createElement("div", { className: `${baseClass}__error-loading` }, errorLoading)),
-        React.createElement(FieldDescription, { value: value, description: description })));
+                },
+                value: valueToRender,
+                showError: showError,
+                disabled: formProcessing,
+                options: options,
+                isMulti: hasMany,
+                isSortable: isSortable,
+                filterOption: enableWordBoundarySearch
+                    ? (item, searchFilter) => {
+                          const r = wordBoundariesRegex(searchFilter || '');
+                          return r.test(item.label);
+                      }
+                    : undefined
+            }),
+        errorLoading &&
+            React.createElement(
+                'div',
+                { className: `${baseClass}__error-loading` },
+                errorLoading
+            ),
+        React.createElement(FieldDescription, {
+            value: value,
+            description: description
+        })
+    );
 };
 export default withCondition(Relationship);

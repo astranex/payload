@@ -206,14 +206,17 @@ describe('Field Validations', () => {
       }],
     };
     const optionsWithEmptyString = {
-      ...options,
-      options: [{
-        value: '',
-        label: 'None',
-      }, {
-        value: 'option',
-        label: 'Option',
-      }],
+        ...options,
+        options: [
+            {
+                value: '',
+                label: 'Ничего'
+            },
+            {
+                value: 'option',
+                label: 'Option'
+            }
+        ]
     };
     it('should allow valid input', () => {
       const val = 'one';
