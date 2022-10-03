@@ -313,7 +313,7 @@ const DefaultGlobalView = (props) => {
                                                 {
                                                     className: `${baseClass}__label`
                                                 },
-                                                'Last Modified'
+                                                'Дата обновления'
                                             ),
                                             React.createElement(
                                                 'div',

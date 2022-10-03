@@ -10,7 +10,26 @@ import SelectExistingModal from './SelectExisting';
 import './index.scss';
 const baseClass = 'upload';
 const UploadInput = (props) => {
-    const { path, required, readOnly, style, className, width, description, label, relationTo, fieldTypes, value, onChange, showError, serverURL = 'http://localhost:3000', api = '/api', collection, errorMessage, filterOptions, } = props;
+    const {
+        path,
+        required,
+        readOnly,
+        style,
+        className,
+        width,
+        description,
+        label,
+        relationTo,
+        fieldTypes,
+        value,
+        onChange,
+        showError,
+        serverURL = 'http://localhost:3000',
+        api = '/api',
+        collection,
+        errorMessage,
+        filterOptions
+    } = props;
     const { toggle } = useModal();
     const addModalSlug = `${path}-add`;
     const selectExistingModalSlug = `${path}-select-existing`;
@@ -21,69 +40,115 @@ const UploadInput = (props) => {
         baseClass,
         className,
         showError && 'error',
-        readOnly && 'read-only',
-    ].filter(Boolean).join(' ');
+        readOnly && 'read-only'
+    ]
+        .filter(Boolean)
+        .join(' ');
     useEffect(() => {
         if (typeof value === 'string' && value !== '') {
             const fetchFile = async () => {
-                const response = await fetch(`${serverURL}${api}/${relationTo}/${value}`);
+                const response = await fetch(
+                    `${serverURL}${api}/${relationTo}/${value}`
+                );
                 if (response.ok) {
                     const json = await response.json();
                     setFile(json);
-                }
-                else {
+                } else {
                     setMissingFile(true);
                     setFile(undefined);
                 }
             };
             fetchFile();
-        }
-        else {
+        } else {
             setFile(undefined);
         }
-    }, [
-        value,
-        relationTo,
-        api,
-        serverURL,
-    ]);
-    return (React.createElement("div", { className: classes, style: {
-            ...style,
-            width,
-        } },
-        React.createElement(Error, { showError: showError, message: errorMessage }),
-        React.createElement(Label, { htmlFor: `field-${path.replace(/\./gi, '__')}`, label: label, required: required }),
-        (collection === null || collection === void 0 ? void 0 : collection.upload) && (React.createElement(React.Fragment, null,
-            (file && !missingFile) && (React.createElement(FileDetails, { collection: collection, doc: file, handleRemove: () => {
-                    onChange(null);
-                } })),
-            (!file || missingFile) && (React.createElement("div", { className: `${baseClass}__wrap` },
-                React.createElement(Button, { buttonStyle: "secondary", onClick: () => {
-                        toggle(addModalSlug);
-                    } },
-                    "Загрузить",
-                    ' ',
-                    collection.labels.singular),
-                React.createElement(Button, { buttonStyle: "secondary", onClick: () => {
-                        toggle(selectExistingModalSlug);
-                    } }, "Выбрать из существующих"))),
-            React.createElement(AddModal, { ...{
-                    collection,
-                    slug: addModalSlug,
-                    fieldTypes,
-                    setValue: (e) => {
-                        setMissingFile(false);
-                        onChange(e);
-                    },
-                } }),
-            React.createElement(SelectExistingModal, { ...{
-                    collection,
-                    slug: selectExistingModalSlug,
-                    setValue: onChange,
-                    addModalSlug,
-                    filterOptions,
-                    path,
-                } }),
-            React.createElement(FieldDescription, { value: file, description: description })))));
+    }, [value, relationTo, api, serverURL]);
+    return React.createElement(
+        'div',
+        {
+            className: classes,
+            style: {
+                ...style,
+                width
+            }
+        },
+        React.createElement(Error, {
+            showError: showError,
+            message: errorMessage
+        }),
+        React.createElement(Label, {
+            htmlFor: `field-${path.replace(/\./gi, '__')}`,
+            label: label,
+            required: required
+        }),
+        (collection === null || collection === void 0
+            ? void 0
+            : collection.upload) &&
+            React.createElement(
+                React.Fragment,
+                null,
+                file &&
+                    !missingFile &&
+                    React.createElement(FileDetails, {
+                        collection: collection,
+                        doc: file,
+                        handleRemove: () => {
+                            onChange(null);
+                        }
+                    }),
+                (!file || missingFile) &&
+                    React.createElement(
+                        'div',
+                        { className: `${baseClass}__wrap` },
+                        React.createElement(
+                            Button,
+                            {
+                                buttonStyle: 'secondary',
+                                onClick: () => {
+                                    toggle(addModalSlug);
+                                }
+                            },
+                            'Загрузить',
+                            ' ',
+                            collection.labels.singular
+                        ),
+                        React.createElement(
+                            Button,
+                            {
+                                buttonStyle: 'secondary',
+                                onClick: () => {
+                                    toggle(selectExistingModalSlug);
+                                }
+                            },
+                            'Выбрать из существующих'
+                        )
+                    ),
+                React.createElement(AddModal, {
+                    ...{
+                        collection,
+                        slug: addModalSlug,
+                        fieldTypes,
+                        setValue: (e) => {
+                            setMissingFile(false);
+                            onChange(e);
+                        }
+                    }
+                }),
+                React.createElement(SelectExistingModal, {
+                    ...{
+                        collection,
+                        slug: selectExistingModalSlug,
+                        setValue: onChange,
+                        addModalSlug,
+                        filterOptions,
+                        path
+                    }
+                }),
+                React.createElement(FieldDescription, {
+                    value: file,
+                    description: description
+                })
+            )
+    );
 };
 export default UploadInput;

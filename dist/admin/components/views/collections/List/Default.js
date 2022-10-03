@@ -147,7 +147,7 @@ const DefaultList = (props) => {
                                 ? data.limit * data.page
                                 : data.totalDocs,
                             ' ',
-                            'of',
+                            'из',
                             ' ',
                             data.totalDocs
                         ),

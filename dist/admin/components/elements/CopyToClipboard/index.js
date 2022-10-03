@@ -3,7 +3,7 @@ import Copy from '../../icons/Copy';
 import Tooltip from '../Tooltip';
 import './index.scss';
 const baseClass = 'copy-to-clipboard';
-const CopyToClipboard = ({ value, defaultMessage = 'copy', successMessage = 'copied', }) => {
+const CopyToClipboard = ({ value, defaultMessage = 'Копировать', successMessage = 'Скопировано', }) => {
     const ref = useRef(null);
     const [copied, setCopied] = useState(false);
     const [hovered, setHovered] = useState(false);

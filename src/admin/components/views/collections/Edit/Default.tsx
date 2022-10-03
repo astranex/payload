@@ -306,7 +306,7 @@ const DefaultEditView: React.FC<Props> = (props) => {
                                                             <div
                                                                 className={`${baseClass}__label`}
                                                             >
-                                                                Last Modified
+                                                                Дата обновления
                                                             </div>
                                                             <div>
                                                                 {format(

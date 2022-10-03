@@ -9,8 +9,8 @@ const baseClass = 'copy-to-clipboard';
 
 const CopyToClipboard: React.FC<Props> = ({
   value,
-  defaultMessage = 'copy',
-  successMessage = 'copied',
+  defaultMessage = 'Копировать',
+  successMessage = 'Скопировано',
 }) => {
   const ref = useRef(null);
   const [copied, setCopied] = useState(false);

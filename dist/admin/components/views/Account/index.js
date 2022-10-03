@@ -34,7 +34,7 @@ const AccountView = () => {
     const action = `${serverURL}${api}/${user.collection}/${data === null || data === void 0 ? void 0 : data.id}?locale=${locale}&depth=0`;
     useEffect(() => {
         const nav = [{
-                label: 'Account',
+                label: 'Аккаунт',
             }];
         setStepNav(nav);
     }, [setStepNav]);

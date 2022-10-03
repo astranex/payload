@@ -30,14 +30,35 @@ const baseClass = 'collection-edit';
 const DefaultEditView = (props) => {
     var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k, _l, _m, _o, _p, _q, _r, _s, _t;
     const { params: { id } = {} } = useRouteMatch();
-    const { admin: { dateFormat }, routes: { admin } } = useConfig();
+    const {
+        admin: { dateFormat },
+        routes: { admin }
+    } = useConfig();
     const { publishedDoc } = useDocumentInfo();
-    const { collection, isEditing, data, onSave, permissions, isLoading, initialState, apiURL, action, hasSavePermission, } = props;
-    const { slug, fields, admin: { useAsTitle, disableDuplicate, preview, hideAPIURL, }, versions, timestamps, auth, upload, } = collection;
-    const classes = [
-        baseClass,
-        isEditing && `${baseClass}--is-editing`,
-    ].filter(Boolean).join(' ');
+    const {
+        collection,
+        isEditing,
+        data,
+        onSave,
+        permissions,
+        isLoading,
+        initialState,
+        apiURL,
+        action,
+        hasSavePermission
+    } = props;
+    const {
+        slug,
+        fields,
+        admin: { useAsTitle, disableDuplicate, preview, hideAPIURL },
+        versions,
+        timestamps,
+        auth,
+        upload
+    } = collection;
+    const classes = [baseClass, isEditing && `${baseClass}--is-editing`]
+        .filter(Boolean)
+        .join(' ');
     const operation = isEditing ? 'update' : 'create';
     return React.createElement(
         'div',
@@ -405,7 +426,7 @@ const DefaultEditView = (props) => {
                                                     {
                                                         className: `${baseClass}__label`
                                                     },
-                                                    'Versions'
+                                                    'Версии'
                                                 ),
                                                 React.createElement(
                                                     VersionsCount,
@@ -428,7 +449,7 @@ const DefaultEditView = (props) => {
                                                             {
                                                                 className: `${baseClass}__label`
                                                             },
-                                                            'Last Modified'
+                                                            'Дата обновления'
                                                         ),
                                                         React.createElement(
                                                             'div',
@@ -457,7 +478,7 @@ const DefaultEditView = (props) => {
                                                             {
                                                                 className: `${baseClass}__label`
                                                             },
-                                                            'Created'
+                                                            'Дата создания'
                                                         ),
                                                         React.createElement(
                                                             'div',

@@ -98,7 +98,7 @@ export const SwapUploadModal = ({
                 React.createElement(
                     'h1',
                     null,
-                    'Выбрать',
+                    'Select',
                     ' ',
                     modalCollection.labels.singular
                 ),
