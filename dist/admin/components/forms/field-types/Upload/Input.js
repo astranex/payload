@@ -61,12 +61,12 @@ const UploadInput = (props) => {
                 React.createElement(Button, { buttonStyle: "secondary", onClick: () => {
                         toggle(addModalSlug);
                     } },
-                    "Upload new",
+                    "Загрузить",
                     ' ',
                     collection.labels.singular),
                 React.createElement(Button, { buttonStyle: "secondary", onClick: () => {
                         toggle(selectExistingModalSlug);
-                    } }, "Choose from existing"))),
+                    } }, "Выбрать из существующих"))),
             React.createElement(AddModal, { ...{
                     collection,
                     slug: addModalSlug,

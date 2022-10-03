@@ -26,9 +26,7 @@ const insertUpload = (editor, { value, relationTo }) => {
         type: 'upload',
         value,
         relationTo,
-        children: [
-            text,
-        ],
+        children: [text]
     };
     if (editor.blurSelection) {
         Transforms.select(editor, editor.blurSelection);
@@ -40,18 +38,40 @@ const UploadButton = ({ path }) => {
     var _a, _b;
     const { open, closeAll, currentModal } = useModal();
     const editor = useSlate();
-    const { serverURL, routes: { api }, collections } = useConfig();
-    const [availableCollections] = useState(() => collections.filter(({ admin: { enableRichTextRelationship }, upload }) => (Boolean(upload) && enableRichTextRelationship)));
+    const {
+        serverURL,
+        routes: { api },
+        collections
+    } = useConfig();
+    const [availableCollections] = useState(() =>
+        collections.filter(
+            ({ admin: { enableRichTextRelationship }, upload }) =>
+                Boolean(upload) && enableRichTextRelationship
+        )
+    );
     const [renderModal, setRenderModal] = useState(false);
     const [modalCollectionOption, setModalCollectionOption] = useState(() => {
-        const firstAvailableCollection = collections.find(({ admin: { enableRichTextRelationship }, upload }) => (Boolean(upload) && enableRichTextRelationship));
+        const firstAvailableCollection = collections.find(
+            ({ admin: { enableRichTextRelationship }, upload }) =>
+                Boolean(upload) && enableRichTextRelationship
+        );
         if (firstAvailableCollection) {
-            return { label: firstAvailableCollection.labels.singular, value: firstAvailableCollection.slug };
+            return {
+                label: firstAvailableCollection.labels.singular,
+                value: firstAvailableCollection.slug
+            };
         }
         return undefined;
     });
-    const [modalCollection, setModalCollection] = useState(() => collections.find(({ admin: { enableRichTextRelationship }, upload }) => (Boolean(upload) && enableRichTextRelationship)));
-    const [fields, setFields] = useState(() => (modalCollection ? formatFields(modalCollection) : undefined));
+    const [modalCollection, setModalCollection] = useState(() =>
+        collections.find(
+            ({ admin: { enableRichTextRelationship }, upload }) =>
+                Boolean(upload) && enableRichTextRelationship
+        )
+    );
+    const [fields, setFields] = useState(() =>
+        modalCollection ? formatFields(modalCollection) : undefined
+    );
     const [limit, setLimit] = useState();
     const [sort, setSort] = useState(null);
     const [where, setWhere] = useState(null);
@@ -74,65 +94,172 @@ const UploadButton = ({ path }) => {
     }, [renderModal, open, modalSlug]);
     useEffect(() => {
         const params = {};
-        if (page)
-            params.page = page;
-        if (where)
-            params.where = where;
-        if (sort)
-            params.sort = sort;
-        if (limit)
-            params.limit = limit;
+        if (page) params.page = page;
+        if (where) params.where = where;
+        if (sort) params.sort = sort;
+        if (limit) params.limit = limit;
         setParams(params);
     }, [setParams, page, sort, where, limit]);
     useEffect(() => {
         if (modalCollectionOption) {
-            setModalCollection(collections.find(({ slug }) => modalCollectionOption.value === slug));
+            setModalCollection(
+                collections.find(
+                    ({ slug }) => modalCollectionOption.value === slug
+                )
+            );
         }
     }, [modalCollectionOption, collections]);
     if (!modalCollection) {
         return null;
     }
-    return (React.createElement(Fragment, null,
-        React.createElement(ElementButton, { className: baseClass, format: "upload", onClick: () => setRenderModal(true) },
-            React.createElement(UploadIcon, null)),
-        renderModal && (React.createElement(Modal, { className: baseModalClass, slug: modalSlug }, isOpen && (React.createElement(MinimalTemplate, { width: "wide" },
-            React.createElement("header", { className: `${baseModalClass}__header` },
-                React.createElement("h1", null,
-                    "Add",
-                    ' ',
-                    modalCollection.labels.singular),
-                React.createElement(Button, { icon: "x", round: true, buttonStyle: "icon-label", iconStyle: "with-border", onClick: () => {
-                        closeAll();
-                        setRenderModal(false);
-                    } })),
-            moreThanOneAvailableCollection && (React.createElement("div", { className: `${baseModalClass}__select-collection-wrap` },
-                React.createElement(Label, { label: "Select a Collection to Browse" }),
-                React.createElement(ReactSelect, { className: `${baseClass}__select-collection`, value: modalCollectionOption, onChange: setModalCollectionOption, options: availableCollections.map((coll) => ({ label: coll.labels.singular, value: coll.slug })) }))),
-            React.createElement(ListControls, { collection: {
-                    ...modalCollection,
-                    fields,
-                }, enableColumns: false, enableSort: true, modifySearchQuery: false, handleSortChange: setSort, handleWhereChange: setWhere }),
-            React.createElement(UploadGallery, { docs: data === null || data === void 0 ? void 0 : data.docs, collection: modalCollection, onCardClick: (doc) => {
-                    insertUpload(editor, {
-                        value: {
-                            id: doc.id,
-                        },
-                        relationTo: modalCollection.slug,
-                    });
-                    setRenderModal(false);
-                    closeAll();
-                } }),
-            React.createElement("div", { className: `${baseModalClass}__page-controls` },
-                React.createElement(Paginator, { limit: data.limit, totalPages: data.totalPages, page: data.page, hasPrevPage: data.hasPrevPage, hasNextPage: data.hasNextPage, prevPage: data.prevPage, nextPage: data.nextPage, numberOfNeighbors: 1, onChange: setPage, disableHistoryChange: true }),
-                (data === null || data === void 0 ? void 0 : data.totalDocs) > 0 && (React.createElement(Fragment, null,
-                    React.createElement("div", { className: `${baseModalClass}__page-info` },
-                        data.page,
-                        "-",
-                        data.totalPages > 1 ? data.limit : data.totalDocs,
-                        ' ',
-                        "of",
-                        ' ',
-                        data.totalDocs),
-                    React.createElement(PerPage, { limits: (_b = (_a = modalCollection === null || modalCollection === void 0 ? void 0 : modalCollection.admin) === null || _a === void 0 ? void 0 : _a.pagination) === null || _b === void 0 ? void 0 : _b.limits, limit: limit, modifySearchParams: false, handleChange: setLimit }))))))))));
+    return React.createElement(
+        Fragment,
+        null,
+        React.createElement(
+            ElementButton,
+            {
+                className: baseClass,
+                format: 'upload',
+                onClick: () => setRenderModal(true)
+            },
+            React.createElement(UploadIcon, null)
+        ),
+        renderModal &&
+            React.createElement(
+                Modal,
+                { className: baseModalClass, slug: modalSlug },
+                isOpen &&
+                    React.createElement(
+                        MinimalTemplate,
+                        { width: 'wide' },
+                        React.createElement(
+                            'header',
+                            { className: `${baseModalClass}__header` },
+                            React.createElement(
+                                'h1',
+                                null,
+                                'Добавить',
+                                ' ',
+                                modalCollection.labels.singular
+                            ),
+                            React.createElement(Button, {
+                                icon: 'x',
+                                round: true,
+                                buttonStyle: 'icon-label',
+                                iconStyle: 'with-border',
+                                onClick: () => {
+                                    closeAll();
+                                    setRenderModal(false);
+                                }
+                            })
+                        ),
+                        moreThanOneAvailableCollection &&
+                            React.createElement(
+                                'div',
+                                {
+                                    className: `${baseModalClass}__select-collection-wrap`
+                                },
+                                React.createElement(Label, {
+                                    label: 'Выберите коллекцию для просмотра'
+                                }),
+                                React.createElement(ReactSelect, {
+                                    className: `${baseClass}__select-collection`,
+                                    value: modalCollectionOption,
+                                    onChange: setModalCollectionOption,
+                                    options: availableCollections.map(
+                                        (coll) => ({
+                                            label: coll.labels.singular,
+                                            value: coll.slug
+                                        })
+                                    )
+                                })
+                            ),
+                        React.createElement(ListControls, {
+                            collection: {
+                                ...modalCollection,
+                                fields
+                            },
+                            enableColumns: false,
+                            enableSort: true,
+                            modifySearchQuery: false,
+                            handleSortChange: setSort,
+                            handleWhereChange: setWhere
+                        }),
+                        React.createElement(UploadGallery, {
+                            docs:
+                                data === null || data === void 0
+                                    ? void 0
+                                    : data.docs,
+                            collection: modalCollection,
+                            onCardClick: (doc) => {
+                                insertUpload(editor, {
+                                    value: {
+                                        id: doc.id
+                                    },
+                                    relationTo: modalCollection.slug
+                                });
+                                setRenderModal(false);
+                                closeAll();
+                            }
+                        }),
+                        React.createElement(
+                            'div',
+                            { className: `${baseModalClass}__page-controls` },
+                            React.createElement(Paginator, {
+                                limit: data.limit,
+                                totalPages: data.totalPages,
+                                page: data.page,
+                                hasPrevPage: data.hasPrevPage,
+                                hasNextPage: data.hasNextPage,
+                                prevPage: data.prevPage,
+                                nextPage: data.nextPage,
+                                numberOfNeighbors: 1,
+                                onChange: setPage,
+                                disableHistoryChange: true
+                            }),
+                            (data === null || data === void 0
+                                ? void 0
+                                : data.totalDocs) > 0 &&
+                                React.createElement(
+                                    Fragment,
+                                    null,
+                                    React.createElement(
+                                        'div',
+                                        {
+                                            className: `${baseModalClass}__page-info`
+                                        },
+                                        data.page,
+                                        '-',
+                                        data.totalPages > 1
+                                            ? data.limit
+                                            : data.totalDocs,
+                                        ' ',
+                                        'из',
+                                        ' ',
+                                        data.totalDocs
+                                    ),
+                                    React.createElement(PerPage, {
+                                        limits:
+                                            (_b =
+                                                (_a =
+                                                    modalCollection === null ||
+                                                    modalCollection === void 0
+                                                        ? void 0
+                                                        : modalCollection.admin) ===
+                                                    null || _a === void 0
+                                                    ? void 0
+                                                    : _a.pagination) === null ||
+                                            _b === void 0
+                                                ? void 0
+                                                : _b.limits,
+                                        limit: limit,
+                                        modifySearchParams: false,
+                                        handleChange: setLimit
+                                    })
+                                )
+                        )
+                    )
+            )
+    );
 };
 export default UploadButton;

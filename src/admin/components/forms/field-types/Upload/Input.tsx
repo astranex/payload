@@ -17,166 +17,157 @@ import './index.scss';
 const baseClass = 'upload';
 
 export type UploadInputProps = Omit<UploadField, 'type'> & {
-  showError?: boolean
-  errorMessage?: string
-  readOnly?: boolean
-  path: string
-  required?: boolean
-  value?: string
-  description?: Description
-  onChange?: (e) => void
-  placeholder?: string
-  style?: React.CSSProperties
-  className?: string
-  width?: string
-  fieldTypes?: FieldTypes
-  collection?: SanitizedCollectionConfig
-  serverURL?: string
-  api?: string
-  filterOptions: FilterOptions
-}
+    showError?: boolean;
+    errorMessage?: string;
+    readOnly?: boolean;
+    path: string;
+    required?: boolean;
+    value?: string;
+    description?: Description;
+    onChange?: (e) => void;
+    placeholder?: string;
+    style?: React.CSSProperties;
+    className?: string;
+    width?: string;
+    fieldTypes?: FieldTypes;
+    collection?: SanitizedCollectionConfig;
+    serverURL?: string;
+    api?: string;
+    filterOptions: FilterOptions;
+};
 
 const UploadInput: React.FC<UploadInputProps> = (props) => {
-  const {
-    path,
-    required,
-    readOnly,
-    style,
-    className,
-    width,
-    description,
-    label,
-    relationTo,
-    fieldTypes,
-    value,
-    onChange,
-    showError,
-    serverURL = 'http://localhost:3000',
-    api = '/api',
-    collection,
-    errorMessage,
-    filterOptions,
-  } = props;
-
-  const { toggle } = useModal();
-
-  const addModalSlug = `${path}-add`;
-  const selectExistingModalSlug = `${path}-select-existing`;
-
-  const [file, setFile] = useState(undefined);
-  const [missingFile, setMissingFile] = useState(false);
-
-  const classes = [
-    'field-type',
-    baseClass,
-    className,
-    showError && 'error',
-    readOnly && 'read-only',
-  ].filter(Boolean).join(' ');
-
-  useEffect(() => {
-    if (typeof value === 'string' && value !== '') {
-      const fetchFile = async () => {
-        const response = await fetch(`${serverURL}${api}/${relationTo}/${value}`);
-        if (response.ok) {
-          const json = await response.json();
-          setFile(json);
-        } else {
-          setMissingFile(true);
-          setFile(undefined);
-        }
-      };
-
-      fetchFile();
-    } else {
-      setFile(undefined);
-    }
-  }, [
-    value,
-    relationTo,
-    api,
-    serverURL,
-  ]);
-
-  return (
-    <div
-      className={classes}
-      style={{
-        ...style,
+    const {
+        path,
+        required,
+        readOnly,
+        style,
+        className,
         width,
-      }}
-    >
-      <Error
-        showError={showError}
-        message={errorMessage}
-      />
-      <Label
-        htmlFor={`field-${path.replace(/\./gi, '__')}`}
-        label={label}
-        required={required}
-      />
-      {collection?.upload && (
-        <React.Fragment>
-          {(file && !missingFile) && (
-            <FileDetails
-              collection={collection}
-              doc={file}
-              handleRemove={() => {
-                onChange(null);
-              }}
+        description,
+        label,
+        relationTo,
+        fieldTypes,
+        value,
+        onChange,
+        showError,
+        serverURL = 'http://localhost:3000',
+        api = '/api',
+        collection,
+        errorMessage,
+        filterOptions
+    } = props;
+
+    const { toggle } = useModal();
+
+    const addModalSlug = `${path}-add`;
+    const selectExistingModalSlug = `${path}-select-existing`;
+
+    const [file, setFile] = useState(undefined);
+    const [missingFile, setMissingFile] = useState(false);
+
+    const classes = [
+        'field-type',
+        baseClass,
+        className,
+        showError && 'error',
+        readOnly && 'read-only'
+    ]
+        .filter(Boolean)
+        .join(' ');
+
+    useEffect(() => {
+        if (typeof value === 'string' && value !== '') {
+            const fetchFile = async () => {
+                const response = await fetch(
+                    `${serverURL}${api}/${relationTo}/${value}`
+                );
+                if (response.ok) {
+                    const json = await response.json();
+                    setFile(json);
+                } else {
+                    setMissingFile(true);
+                    setFile(undefined);
+                }
+            };
+
+            fetchFile();
+        } else {
+            setFile(undefined);
+        }
+    }, [value, relationTo, api, serverURL]);
+
+    return (
+        <div
+            className={classes}
+            style={{
+                ...style,
+                width
+            }}
+        >
+            <Error showError={showError} message={errorMessage} />
+            <Label
+                htmlFor={`field-${path.replace(/\./gi, '__')}`}
+                label={label}
+                required={required}
             />
-          )}
-          {(!file || missingFile) && (
-            <div className={`${baseClass}__wrap`}>
-              <Button
-                buttonStyle="secondary"
-                onClick={() => {
-                  toggle(addModalSlug);
-                }}
-              >
-                Upload new
-                {' '}
-                {collection.labels.singular}
-              </Button>
-              <Button
-                buttonStyle="secondary"
-                onClick={() => {
-                  toggle(selectExistingModalSlug);
-                }}
-              >
-                Choose from existing
-              </Button>
-            </div>
-          )}
-          <AddModal
-            {...{
-              collection,
-              slug: addModalSlug,
-              fieldTypes,
-              setValue: (e) => {
-                setMissingFile(false);
-                onChange(e);
-              },
-            }}
-          />
-          <SelectExistingModal
-            {...{
-              collection,
-              slug: selectExistingModalSlug,
-              setValue: onChange,
-              addModalSlug,
-              filterOptions,
-              path,
-            }}
-          />
-          <FieldDescription
-            value={file}
-            description={description}
-          />
-        </React.Fragment>
-      )}
-    </div>
-  );
+            {collection?.upload && (
+                <React.Fragment>
+                    {file && !missingFile && (
+                        <FileDetails
+                            collection={collection}
+                            doc={file}
+                            handleRemove={() => {
+                                onChange(null);
+                            }}
+                        />
+                    )}
+                    {(!file || missingFile) && (
+                        <div className={`${baseClass}__wrap`}>
+                            <Button
+                                buttonStyle="secondary"
+                                onClick={() => {
+                                    toggle(addModalSlug);
+                                }}
+                            >
+                                Загрузить {collection.labels.singular}
+                            </Button>
+                            <Button
+                                buttonStyle="secondary"
+                                onClick={() => {
+                                    toggle(selectExistingModalSlug);
+                                }}
+                            >
+                                Выбрать из существующих
+                            </Button>
+                        </div>
+                    )}
+                    <AddModal
+                        {...{
+                            collection,
+                            slug: addModalSlug,
+                            fieldTypes,
+                            setValue: (e) => {
+                                setMissingFile(false);
+                                onChange(e);
+                            }
+                        }}
+                    />
+                    <SelectExistingModal
+                        {...{
+                            collection,
+                            slug: selectExistingModalSlug,
+                            setValue: onChange,
+                            addModalSlug,
+                            filterOptions,
+                            path
+                        }}
+                    />
+                    <FieldDescription value={file} description={description} />
+                </React.Fragment>
+            )}
+        </div>
+    );
 };
 
 export default UploadInput;

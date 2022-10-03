@@ -69,7 +69,7 @@ const SelectExistingUploadModal = (props) => {
             React.createElement("div", null,
                 React.createElement("h1", null,
                     ' ',
-                    "Select existing",
+                    "Выбрать из существующих",
                     ' ',
                     collection.labels.singular),
                 React.createElement(Button, { icon: "x", round: true, buttonStyle: "icon-label", iconStyle: "with-border", onClick: closeAll })),
@@ -91,7 +91,7 @@ const SelectExistingUploadModal = (props) => {
                     "-",
                     data.totalPages > 1 ? data.limit : data.totalDocs,
                     ' ',
-                    "of",
+                    "из",
                     ' ',
                     data.totalDocs),
                 React.createElement(PerPage, { limits: (_b = (_a = collection === null || collection === void 0 ? void 0 : collection.admin) === null || _a === void 0 ? void 0 : _a.pagination) === null || _b === void 0 ? void 0 : _b.limits, limit: limit, modifySearchParams: false, handleChange: setLimit }))))))));

@@ -86,7 +86,7 @@ const ForgotPassword: React.FC = () => {
         <h1>Forgot Password</h1>
         <p>Please enter your email below. You will receive an email message with instructions on how to reset your password.</p>
         <Email
-          label="Email Address"
+          label="Email"
           name="email"
           admin={{ autoComplete: 'email' }}
           required
