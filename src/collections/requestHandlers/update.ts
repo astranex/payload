@@ -5,41 +5,51 @@ import formatSuccessResponse from '../../express/responses/formatSuccess';
 import update from '../operations/update';
 
 export type UpdateResult = {
-  message: string
-  doc: Document
+    message: string;
+    doc: Document;
 };
 
-export async function deprecatedUpdate(req: PayloadRequest, res: Response, next: NextFunction): Promise<Response<UpdateResult> | void> {
-  req.payload.logger.warn('The PUT method is deprecated and will no longer be supported in a future release. Please use the PATCH method for update requests.');
+export async function deprecatedUpdate(
+    req: PayloadRequest,
+    res: Response,
+    next: NextFunction
+): Promise<Response<UpdateResult> | void> {
+    req.payload.logger.warn(
+        'The PUT method is deprecated and will no longer be supported in a future release. Please use the PATCH method for update requests.'
+    );
 
-  return updateHandler(req, res, next);
+    return updateHandler(req, res, next);
 }
 
-export default async function updateHandler(req: PayloadRequest, res: Response, next: NextFunction): Promise<Response<UpdateResult> | void> {
-  try {
-    const draft = req.query.draft === 'true';
-    const autosave = req.query.autosave === 'true';
+export default async function updateHandler(
+    req: PayloadRequest,
+    res: Response,
+    next: NextFunction
+): Promise<Response<UpdateResult> | void> {
+    try {
+        const draft = req.query.draft === 'true';
+        const autosave = req.query.autosave === 'true';
 
-    const doc = await update({
-      req,
-      collection: req.collection,
-      id: req.params.id,
-      data: req.body,
-      depth: parseInt(String(req.query.depth), 10),
-      draft,
-      autosave,
-    });
+        const doc = await update({
+            req,
+            collection: req.collection,
+            id: req.params.id,
+            data: req.body,
+            depth: parseInt(String(req.query.depth), 10),
+            draft,
+            autosave
+        });
 
-    let message = 'Updated successfully.';
+        let message = 'Обновлено успешно.';
 
-    if (draft) message = 'Draft saved successfully.';
-    if (autosave) message = 'Autosaved successfully.';
+        if (draft) message = 'Черновик успешно сохранен.';
+        if (autosave) message = 'Автосохранение успешно.';
 
-    return res.status(httpStatus.OK).json({
-      ...formatSuccessResponse(message, 'message'),
-      doc,
-    });
-  } catch (error) {
-    return next(error);
-  }
+        return res.status(httpStatus.OK).json({
+            ...formatSuccessResponse(message, 'message'),
+            doc
+        });
+    } catch (error) {
+        return next(error);
+    }
 }

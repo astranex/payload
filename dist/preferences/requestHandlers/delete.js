@@ -14,7 +14,7 @@ async function deleteHandler(req, res, next) {
             key: req.params.key,
         });
         return res.status(http_status_1.default.OK).json({
-            ...(0, formatSuccess_1.default)('Deleted successfully.', 'message'),
+            ...(0, formatSuccess_1.default)('Удалено успешно.', 'message'),
         });
     }
     catch (error) {

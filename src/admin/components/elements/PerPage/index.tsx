@@ -29,7 +29,7 @@ const PerPage: React.FC<Props> = ({ limits = defaultLimits, limit, handleChange,
         horizontalAlign="right"
         button={(
           <strong>
-            Per Page:
+            На странице:
             {' '}
             {limit}
             <Chevron />

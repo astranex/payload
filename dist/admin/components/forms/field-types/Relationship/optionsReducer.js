@@ -1,29 +1,41 @@
-const reduceToIDs = (options) => options.reduce((ids, option) => {
-    if (option.options) {
-        return [
-            ...ids,
-            ...reduceToIDs(option.options),
-        ];
-    }
-    return [
-        ...ids,
-        option.value,
-    ];
-}, []);
-const sortOptions = (options) => options.sort((a, b) => {
-    var _a, _b;
-    if (typeof ((_a = a === null || a === void 0 ? void 0 : a.label) === null || _a === void 0 ? void 0 : _a.localeCompare) === 'function' && typeof ((_b = b === null || b === void 0 ? void 0 : b.label) === null || _b === void 0 ? void 0 : _b.localeCompare) === 'function') {
-        return a.label.localeCompare(b.label);
-    }
-    return 0;
-});
+const reduceToIDs = (options) =>
+    options.reduce((ids, option) => {
+        if (option.options) {
+            return [...ids, ...reduceToIDs(option.options)];
+        }
+        return [...ids, option.value];
+    }, []);
+const sortOptions = (options) =>
+    options.sort((a, b) => {
+        var _a, _b;
+        if (
+            typeof ((_a = a === null || a === void 0 ? void 0 : a.label) ===
+                null || _a === void 0
+                ? void 0
+                : _a.localeCompare) === 'function' &&
+            typeof ((_b = b === null || b === void 0 ? void 0 : b.label) ===
+                null || _b === void 0
+                ? void 0
+                : _b.localeCompare) === 'function'
+        ) {
+            return a.label.localeCompare(b.label);
+        }
+        return 0;
+    });
 const optionsReducer = (state, action) => {
     switch (action.type) {
         case 'CLEAR': {
-            return action.required ? [] : [{ value: 'null', label: 'Ничего' }];
+            return action.required ? [] : [{ value: 'null', label: 'None' }];
         }
         case 'ADD': {
-            const { hasMultipleRelations, collection, relation, data, sort, ids = [] } = action;
+            const {
+                hasMultipleRelations,
+                collection,
+                relation,
+                data,
+                sort,
+                ids = []
+            } = action;
             const labelKey = collection.admin.useAsTitle || 'id';
             const loadedIDs = reduceToIDs(state);
             if (!hasMultipleRelations) {
@@ -43,7 +55,7 @@ const optionsReducer = (state, action) => {
                             ];
                         }
                         return docs;
-                    }, []),
+                    }, [])
                 ];
                 ids.forEach((id) => {
                     if (!loadedIDs.includes(id)) {
@@ -59,17 +71,20 @@ const optionsReducer = (state, action) => {
                 return sort ? sortOptions(options) : options;
             }
             const newOptions = [...state];
-            const optionsToAddTo = newOptions.find((optionGroup) => optionGroup.label === collection.labels.plural);
+            const optionsToAddTo = newOptions.find(
+                (optionGroup) => optionGroup.label === collection.labels.plural
+            );
             const newSubOptions = data.docs.reduce((docs, doc) => {
                 if (loadedIDs.indexOf(doc.id) === -1) {
                     loadedIDs.push(doc.id);
                     return [
                         ...docs,
                         {
-                            label: doc[labelKey] || `Без названия - ID: ${doc.id}`,
+                            label:
+                                doc[labelKey] || `Без названия - ID: ${doc.id}`,
                             relationTo: relation,
-                            value: doc.id,
-                        },
+                            value: doc.id
+                        }
                     ];
                 }
                 return docs;
@@ -78,22 +93,23 @@ const optionsReducer = (state, action) => {
                 if (!loadedIDs.includes(id)) {
                     newSubOptions.push({
                         label: labelKey === 'id' ? id : `Untitled - ID: ${id}`,
-                        value: id,
+                        value: id
                     });
                 }
             });
             if (optionsToAddTo) {
                 const subOptions = [
                     ...optionsToAddTo.options,
-                    ...newSubOptions,
+                    ...newSubOptions
                 ];
-                optionsToAddTo.options = sort ? sortOptions(subOptions) : subOptions;
-            }
-            else {
+                optionsToAddTo.options = sort
+                    ? sortOptions(subOptions)
+                    : subOptions;
+            } else {
                 newOptions.push({
                     label: collection.labels.plural,
                     options: sort ? sortOptions(newSubOptions) : newSubOptions,
-                    value: undefined,
+                    value: undefined
                 });
             }
             return newOptions;

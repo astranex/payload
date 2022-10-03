@@ -33,7 +33,7 @@ export const ArrayAction = ({ moveRow, index, rowCount, addRow, duplicateRow, re
                         close();
                     } },
                     React.createElement(Copy, null),
-                    "Duplicate"),
+                    "Дублировать"),
                 React.createElement("button", { className: `${baseClass}__action ${baseClass}__remove`, type: "button", onClick: () => {
                         removeRow(index);
                         close();

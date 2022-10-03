@@ -13,7 +13,7 @@ const PerPage = ({ limits = defaultLimits, limit, handleChange, modifySearchPara
     const history = useHistory();
     return (React.createElement("div", { className: baseClass },
         React.createElement(Popup, { horizontalAlign: "right", button: (React.createElement("strong", null,
-                "Per Page:",
+                "На странице:",
                 ' ',
                 limit,
                 React.createElement(Chevron, null))), render: ({ close }) => (React.createElement("div", null,

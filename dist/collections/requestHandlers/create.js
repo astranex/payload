@@ -1,11 +1,15 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const http_status_1 = __importDefault(require("http-status"));
-const formatSuccess_1 = __importDefault(require("../../express/responses/formatSuccess"));
-const create_1 = __importDefault(require("../operations/create"));
+'use strict';
+var __importDefault =
+    (this && this.__importDefault) ||
+    function (mod) {
+        return mod && mod.__esModule ? mod : { default: mod };
+    };
+Object.defineProperty(exports, '__esModule', { value: true });
+const http_status_1 = __importDefault(require('http-status'));
+const formatSuccess_1 = __importDefault(
+    require('../../express/responses/formatSuccess')
+);
+const create_1 = __importDefault(require('../operations/create'));
 async function createHandler(req, res, next) {
     try {
         const doc = await (0, create_1.default)({
@@ -13,14 +17,16 @@ async function createHandler(req, res, next) {
             collection: req.collection,
             data: req.body,
             depth: Number(req.query.depth),
-            draft: req.query.draft === 'true',
+            draft: req.query.draft === 'true'
         });
         return res.status(http_status_1.default.CREATED).json({
-            ...(0, formatSuccess_1.default)(`${req.collection.config.labels.singular} successfully created.`, 'message'),
-            doc,
+            ...(0, formatSuccess_1.default)(
+                `${req.collection.config.labels.singular} успешно создан.`,
+                'message'
+            ),
+            doc
         });
-    }
-    catch (error) {
+    } catch (error) {
         return next(error);
     }
 }

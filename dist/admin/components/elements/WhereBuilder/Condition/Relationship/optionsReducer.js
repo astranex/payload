@@ -8,7 +8,7 @@ const reduceToIDs = (options) =>
 const optionsReducer = (state, action) => {
     switch (action.type) {
         case 'CLEAR': {
-            return action.required ? [] : [{ value: 'null', label: 'Ничего' }];
+            return action.required ? [] : [{ value: 'null', label: 'None' }];
         }
         case 'ADD': {
             const { hasMultipleRelations, collection, relation, data } = action;

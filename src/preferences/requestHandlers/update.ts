@@ -5,22 +5,30 @@ import formatSuccessResponse from '../../express/responses/formatSuccess';
 import update from '../operations/update';
 
 export type UpdatePreferenceResult = Promise<Response<Document> | void>;
-export type UpdatePreferenceResponse = (req: PayloadRequest, res: Response, next: NextFunction) => UpdatePreferenceResult;
+export type UpdatePreferenceResponse = (
+    req: PayloadRequest,
+    res: Response,
+    next: NextFunction
+) => UpdatePreferenceResult;
 
-export default async function updateHandler(req: PayloadRequest, res: Response, next: NextFunction): Promise<Response<any> | void> {
-  try {
-    const doc = await update({
-      req,
-      user: req.user,
-      key: req.params.key,
-      value: req.body.value || req.body,
-    });
+export default async function updateHandler(
+    req: PayloadRequest,
+    res: Response,
+    next: NextFunction
+): Promise<Response<any> | void> {
+    try {
+        const doc = await update({
+            req,
+            user: req.user,
+            key: req.params.key,
+            value: req.body.value || req.body
+        });
 
-    return res.status(httpStatus.OK).json({
-      ...formatSuccessResponse('Updated successfully.', 'message'),
-      doc,
-    });
-  } catch (error) {
-    return next(error);
-  }
+        return res.status(httpStatus.OK).json({
+            ...formatSuccessResponse('Обновлено успешно.', 'message'),
+            doc
+        });
+    } catch (error) {
+        return next(error);
+    }
 }

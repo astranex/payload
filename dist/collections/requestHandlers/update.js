@@ -1,14 +1,20 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
+'use strict';
+var __importDefault =
+    (this && this.__importDefault) ||
+    function (mod) {
+        return mod && mod.__esModule ? mod : { default: mod };
+    };
+Object.defineProperty(exports, '__esModule', { value: true });
 exports.deprecatedUpdate = void 0;
-const http_status_1 = __importDefault(require("http-status"));
-const formatSuccess_1 = __importDefault(require("../../express/responses/formatSuccess"));
-const update_1 = __importDefault(require("../operations/update"));
+const http_status_1 = __importDefault(require('http-status'));
+const formatSuccess_1 = __importDefault(
+    require('../../express/responses/formatSuccess')
+);
+const update_1 = __importDefault(require('../operations/update'));
 async function deprecatedUpdate(req, res, next) {
-    req.payload.logger.warn('The PUT method is deprecated and will no longer be supported in a future release. Please use the PATCH method for update requests.');
+    req.payload.logger.warn(
+        'The PUT method is deprecated and will no longer be supported in a future release. Please use the PATCH method for update requests.'
+    );
     return updateHandler(req, res, next);
 }
 exports.deprecatedUpdate = deprecatedUpdate;
@@ -23,19 +29,16 @@ async function updateHandler(req, res, next) {
             data: req.body,
             depth: parseInt(String(req.query.depth), 10),
             draft,
-            autosave,
+            autosave
         });
-        let message = 'Updated successfully.';
-        if (draft)
-            message = 'Draft saved successfully.';
-        if (autosave)
-            message = 'Autosaved successfully.';
+        let message = 'Обновлено успешно.';
+        if (draft) message = 'Черновик успешно сохранен.';
+        if (autosave) message = 'Автосохранение успешно.';
         return res.status(http_status_1.default.OK).json({
             ...(0, formatSuccess_1.default)(message, 'message'),
-            doc,
+            doc
         });
-    }
-    catch (error) {
+    } catch (error) {
         return next(error);
     }
 }

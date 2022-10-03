@@ -15,68 +15,72 @@ import './index.scss';
 const baseClass = 'create-first-user';
 
 const CreateFirstUser: React.FC<Props> = (props) => {
-  const { setInitialized } = props;
-  const { setToken } = useAuth();
-  const {
-    admin: { user: userSlug }, collections, serverURL, routes: { admin, api },
-  } = useConfig();
+    const { setInitialized } = props;
+    const { setToken } = useAuth();
+    const {
+        admin: { user: userSlug },
+        collections,
+        serverURL,
+        routes: { admin, api }
+    } = useConfig();
 
-  const userConfig = collections.find((collection) => collection.slug === userSlug);
+    const userConfig = collections.find(
+        (collection) => collection.slug === userSlug
+    );
 
-  const onSuccess = (json) => {
-    if (json?.user?.token) {
-      setToken(json.user.token);
-    }
+    const onSuccess = (json) => {
+        if (json?.user?.token) {
+            setToken(json.user.token);
+        }
 
-    setInitialized(true);
-  };
+        setInitialized(true);
+    };
 
-  const fields = [
-    {
-      name: 'email',
-      label: 'Email Address',
-      type: 'email',
-      required: true,
-    }, {
-      name: 'password',
-      label: 'Password',
-      type: 'password',
-      required: true,
-    }, {
-      name: 'confirm-password',
-      label: 'Confirm Password',
-      type: 'confirmPassword',
-      required: true,
-    },
-  ] as Field[];
+    const fields = [
+        {
+            name: 'email',
+            label: 'Email',
+            type: 'email',
+            required: true
+        },
+        {
+            name: 'password',
+            label: 'Пароль',
+            type: 'password',
+            required: true
+        },
+        {
+            name: 'confirm-password',
+            label: 'Подтверждение пароля',
+            type: 'confirmPassword',
+            required: true
+        }
+    ] as Field[];
 
-  return (
-    <MinimalTemplate className={baseClass}>
-      <h1>Welcome</h1>
-      <p>To begin, create your first user.</p>
-      <Meta
-        title="Create First User"
-        description="Create first user"
-        keywords="Create, Payload, CMS"
-      />
-      <Form
-        onSuccess={onSuccess}
-        method="post"
-        redirect={admin}
-        action={`${serverURL}${api}/${userSlug}/first-register`}
-        validationOperation="create"
-      >
-        <RenderFields
-          fieldSchema={[
-            ...fields,
-            ...userConfig.fields,
-          ]}
-          fieldTypes={fieldTypes}
-        />
-        <FormSubmit>Create</FormSubmit>
-      </Form>
-    </MinimalTemplate>
-  );
+    return (
+        <MinimalTemplate className={baseClass}>
+            <h1>Welcome</h1>
+            <p>To begin, create your first user.</p>
+            <Meta
+                title="Создание первого пользователя"
+                description="Создания первого пользователя"
+                keywords="Создание, Payload, CMS"
+            />
+            <Form
+                onSuccess={onSuccess}
+                method="post"
+                redirect={admin}
+                action={`${serverURL}${api}/${userSlug}/first-register`}
+                validationOperation="create"
+            >
+                <RenderFields
+                    fieldSchema={[...fields, ...userConfig.fields]}
+                    fieldTypes={fieldTypes}
+                />
+                <FormSubmit>Создать</FormSubmit>
+            </Form>
+        </MinimalTemplate>
+    );
 };
 
 export default CreateFirstUser;

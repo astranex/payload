@@ -52,7 +52,7 @@ const Relationship = (props) => {
     const hasMultipleRelations = Array.isArray(relationTo);
     const [options, dispatchOptions] = useReducer(
         optionsReducer,
-        required || hasMany ? [] : [{ value: null, label: 'Ничего' }]
+        required || hasMany ? [] : [{ value: null, label: 'None' }]
     );
     const [lastFullyLoadedRelation, setLastFullyLoadedRelation] = useState(-1);
     const [lastLoadedPage, setLastLoadedPage] = useState(1);

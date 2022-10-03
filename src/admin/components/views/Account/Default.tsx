@@ -64,9 +64,9 @@ const DefaultAccount: React.FC<Props> = (props) => {
                     >
                         <div className={`${baseClass}__main`}>
                             <Meta
-                                title="Account"
-                                description="Account of current user"
-                                keywords="Account, Dashboard, Payload, CMS"
+                                title="Аккаунт"
+                                description="Аккаунт текущего пользователя"
+                                keywords="Аккаунт, Панель управления, Payload, CMS"
                             />
                             <Eyebrow />
                             {!(
@@ -103,7 +103,7 @@ const DefaultAccount: React.FC<Props> = (props) => {
                                 <Gutter
                                     className={`${baseClass}__payload-settings`}
                                 >
-                                    <h3>Payload Settings</h3>
+                                    <h3>Настройки панели управления</h3>
                                     <ToggleTheme />
                                 </Gutter>
                             </div>
@@ -190,7 +190,7 @@ const DefaultAccount: React.FC<Props> = (props) => {
                                                         <div
                                                             className={`${baseClass}__label`}
                                                         >
-                                                            Last Modified
+                                                            Дата обновления
                                                         </div>
                                                         <div>
                                                             {format(
@@ -207,7 +207,7 @@ const DefaultAccount: React.FC<Props> = (props) => {
                                                         <div
                                                             className={`${baseClass}__label`}
                                                         >
-                                                            Created
+                                                            Дата создания
                                                         </div>
                                                         <div>
                                                             {format(

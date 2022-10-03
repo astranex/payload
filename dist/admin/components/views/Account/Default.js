@@ -21,9 +21,27 @@ import './index.scss';
 const baseClass = 'account';
 const DefaultAccount = (props) => {
     var _a, _b, _c, _d;
-    const { collection, data, permissions, hasSavePermission, apiURL, initialState, isLoading, action } = props;
-    const { slug, fields, admin: { useAsTitle, preview }, timestamps, auth } = collection;
-    const { admin: { dateFormat }, routes: { admin } } = useConfig();
+    const {
+        collection,
+        data,
+        permissions,
+        hasSavePermission,
+        apiURL,
+        initialState,
+        isLoading,
+        action
+    } = props;
+    const {
+        slug,
+        fields,
+        admin: { useAsTitle, preview },
+        timestamps,
+        auth
+    } = collection;
+    const {
+        admin: { dateFormat },
+        routes: { admin }
+    } = useConfig();
     const classes = [baseClass].filter(Boolean).join(' ');
     return React.createElement(
         'div',
@@ -46,9 +64,9 @@ const DefaultAccount = (props) => {
                         'div',
                         { className: `${baseClass}__main` },
                         React.createElement(Meta, {
-                            title: 'Account',
-                            description: 'Account of current user',
-                            keywords: 'Account, Dashboard, Payload, CMS'
+                            title: 'Аккаунт',
+                            description: 'Аккаунт текущего пользователя',
+                            keywords: 'Аккаунт, Панель управления, Payload, CMS'
                         }),
                         React.createElement(Eyebrow, null),
                         !(
@@ -116,7 +134,7 @@ const DefaultAccount = (props) => {
                                 React.createElement(
                                     'h3',
                                     null,
-                                    'Payload Settings'
+                                    'Настройки панели управления'
                                 ),
                                 React.createElement(ToggleTheme, null)
                             )
@@ -266,7 +284,7 @@ const DefaultAccount = (props) => {
                                                         {
                                                             className: `${baseClass}__label`
                                                         },
-                                                        'Last Modified'
+                                                        'Дата обновления'
                                                     ),
                                                     React.createElement(
                                                         'div',
@@ -288,7 +306,7 @@ const DefaultAccount = (props) => {
                                                         {
                                                             className: `${baseClass}__label`
                                                         },
-                                                        'Created'
+                                                        'Дата создания'
                                                     ),
                                                     React.createElement(
                                                         'div',

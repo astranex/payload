@@ -29,7 +29,7 @@ const ConfirmPassword = () => {
     ].filter(Boolean).join(' ');
     return (React.createElement("div", { className: classes },
         React.createElement(Error, { showError: showError, message: errorMessage }),
-        React.createElement(Label, { htmlFor: "field-confirm-password", label: "Confirm Password", required: true }),
+        React.createElement(Label, { htmlFor: "field-confirm-password", label: "Подтверждение пароля", required: true }),
         React.createElement("input", { value: value || '', onChange: setValue, type: "password", autoComplete: "off", id: "field-confirm-password", name: "confirm-password" })));
 };
 export default ConfirmPassword;
