@@ -110,6 +110,7 @@ const Relationship = (props) => {
             });
             if (!errorLoading) {
                 relationsToFetch.reduce(async (priorRelation, relation) => {
+                    console.log('priorRelation & relation:', priorRelation, relation);
                     var _a;
                     await priorRelation;
                     if (resultsFetched < 10) {
@@ -241,6 +242,7 @@ const Relationship = (props) => {
                                     });
                                 }
                             });
+                            console.log('mathedOption:', matchedOption);
                             return matchedOption;
                         }
                         return options.find((opt) => opt.value === val);
