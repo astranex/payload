@@ -70,13 +70,14 @@ const optionsReducer = (state, action) => {
                         });
                     }
                 });
+                console.log('options in ADD 2: ', options);
                 return sort ? sortOptions(options) : options;
             }
             const newOptions = [...state];
             const optionsToAddTo = newOptions.find(
                 (optionGroup) => optionGroup.label === collection.labels.plural
             );
-            console.log('optionsToAddTo: ', optionsToAddTo);
+            console.log('newOptions: ', newOptions);
             const newSubOptions = data.docs.reduce((docs, doc) => {
                 if (loadedIDs.indexOf(doc.id) === -1) {
                     loadedIDs.push(doc.id);
@@ -92,6 +93,7 @@ const optionsReducer = (state, action) => {
                 }
                 return docs;
             }, []);
+            console.log('newSubOptions: ', newSubOptions);
             ids.forEach((id) => {
                 if (!loadedIDs.includes(id)) {
                     newSubOptions.push({
@@ -116,6 +118,7 @@ const optionsReducer = (state, action) => {
                     value: undefined
                 });
             }
+            console.log('newSubOptions 2: ', newOptions);
             return newOptions;
         }
         default: {
