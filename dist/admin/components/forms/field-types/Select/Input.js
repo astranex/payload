@@ -41,7 +41,6 @@ const SelectInput = (props) => {
     } else {
         valueToRender = options.find((option) => option.value === value);
     }
-    console.log(valueToRender);
     return React.createElement(
         'div',
         {
