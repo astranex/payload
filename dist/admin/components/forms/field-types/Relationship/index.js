@@ -54,6 +54,7 @@ const Relationship = (props) => {
         optionsReducer,
         required || hasMany ? [] : [{ value: null, label: 'None' }]
     );
+    console.log(options);
     const [lastFullyLoadedRelation, setLastFullyLoadedRelation] = useState(-1);
     const [lastLoadedPage, setLastLoadedPage] = useState(1);
     const [errorLoading, setErrorLoading] = useState('');
