@@ -54,7 +54,6 @@ const Relationship = (props) => {
         optionsReducer,
         required || hasMany ? [] : [{ value: null, label: 'None' }]
     );
-    console.log(options);
     const [lastFullyLoadedRelation, setLastFullyLoadedRelation] = useState(-1);
     const [lastLoadedPage, setLastLoadedPage] = useState(1);
     const [errorLoading, setErrorLoading] = useState('');
@@ -110,7 +109,6 @@ const Relationship = (props) => {
             });
             if (!errorLoading) {
                 relationsToFetch.reduce(async (priorRelation, relation) => {
-                    console.log('priorRelation & relation:', priorRelation, relation);
                     var _a;
                     await priorRelation;
                     if (resultsFetched < 10) {
@@ -242,7 +240,7 @@ const Relationship = (props) => {
                                     });
                                 }
                             });
-                            console.log('mathedOption:', matchedOption);
+
                             return matchedOption;
                         }
                         return options.find((opt) => opt.value === val);
