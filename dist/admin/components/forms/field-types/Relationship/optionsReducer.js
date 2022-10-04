@@ -25,7 +25,7 @@ const sortOptions = (options) =>
 const optionsReducer = (state, action) => {
     switch (action.type) {
         case 'CLEAR': {
-            return action.required ? [] : [{ value: 'null', label: 'None' }];
+            return action.required ? [] : [{ value: 'null', label: 'Ничего' }];
         }
         case 'ADD': {
             const {
@@ -57,6 +57,8 @@ const optionsReducer = (state, action) => {
                         return docs;
                     }, [])
                 ];
+                console.log('options in ADD: ', options);
+                console.log('loadedIDs in ADD', loadedIDs);
                 ids.forEach((id) => {
                     if (!loadedIDs.includes(id)) {
                         options.push({
@@ -74,6 +76,7 @@ const optionsReducer = (state, action) => {
             const optionsToAddTo = newOptions.find(
                 (optionGroup) => optionGroup.label === collection.labels.plural
             );
+            console.log('optionsToAddTo: ', optionsToAddTo);
             const newSubOptions = data.docs.reduce((docs, doc) => {
                 if (loadedIDs.indexOf(doc.id) === -1) {
                     loadedIDs.push(doc.id);
@@ -92,7 +95,8 @@ const optionsReducer = (state, action) => {
             ids.forEach((id) => {
                 if (!loadedIDs.includes(id)) {
                     newSubOptions.push({
-                        label: labelKey === 'id' ? id : `Untitled - ID: ${id}`,
+                        label:
+                            labelKey === 'id' ? id : `Без названия - ID: ${id}`,
                         value: id
                     });
                 }

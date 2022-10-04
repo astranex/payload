@@ -40,7 +40,6 @@ const Select = (props) => {
     const [options, setOptions] = useState(formatOptions(optionsFromProps));
     useEffect(() => {
         setOptions(formatOptions(optionsFromProps));
-        console.log(formatOptions(optionsFromProps));
     }, [optionsFromProps]);
     const memoizedValidate = useCallback(
         (value, validationOptions) => {
