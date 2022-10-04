@@ -434,6 +434,7 @@ const Relationship = (props) => {
                 width
             }
         },
+        React.createElement('div', null, JSON.stringify(options)),
         React.createElement(Error, {
             showError: showError,
             message: errorMessage

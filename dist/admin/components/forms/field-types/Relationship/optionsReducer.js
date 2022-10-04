@@ -57,8 +57,6 @@ const optionsReducer = (state, action) => {
                         return docs;
                     }, [])
                 ];
-                console.log('options in ADD: ', options);
-                console.log('loadedIDs in ADD', loadedIDs);
                 ids.forEach((id) => {
                     if (!loadedIDs.includes(id)) {
                         options.push({
@@ -70,14 +68,14 @@ const optionsReducer = (state, action) => {
                         });
                     }
                 });
-                console.log('options in ADD 2: ', options);
+
                 return sort ? sortOptions(options) : options;
             }
             const newOptions = [...state];
             const optionsToAddTo = newOptions.find(
                 (optionGroup) => optionGroup.label === collection.labels.plural
             );
-            console.log('newOptions: ', newOptions);
+
             const newSubOptions = data.docs.reduce((docs, doc) => {
                 if (loadedIDs.indexOf(doc.id) === -1) {
                     loadedIDs.push(doc.id);
@@ -93,7 +91,7 @@ const optionsReducer = (state, action) => {
                 }
                 return docs;
             }, []);
-            console.log('newSubOptions: ', newSubOptions);
+
             ids.forEach((id) => {
                 if (!loadedIDs.includes(id)) {
                     newSubOptions.push({
