@@ -6,13 +6,13 @@ import './index.scss';
 const baseClass = 'condition-value-text';
 
 const Text: React.FC<Props> = ({ onChange, value }) => (
-  <input
-    placeholder="Enter a value"
-    className={baseClass}
-    type="text"
-    onChange={(e) => onChange(e.target.value)}
-    value={value || ''}
-  />
+    <input
+        placeholder="Введите значение"
+        className={baseClass}
+        type="text"
+        onChange={(e) => onChange(e.target.value)}
+        value={value || ''}
+    />
 );
 
 export default Text;

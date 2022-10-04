@@ -1,65 +1,65 @@
 const boolean = [
     {
-        label: 'equals',
+        label: 'равен',
         value: 'equals',
     },
     {
-        label: 'is not equal to',
+        label: 'не равен',
         value: 'not_equals',
     },
 ];
 const base = [
     ...boolean,
     {
-        label: 'is in',
+        label: 'находится в',
         value: 'in',
     },
     {
-        label: 'is not in',
+        label: 'не находится в',
         value: 'not_in',
     },
     {
-        label: 'exists',
+        label: 'существует',
         value: 'exists',
     },
 ];
 const numeric = [
     ...base,
     {
-        label: 'is greater than',
+        label: 'больше, чем',
         value: 'greater_than',
     },
     {
-        label: 'is less than',
+        label: 'меньше, чем',
         value: 'less_than',
     },
     {
-        label: 'is less than or equal to',
+        label: 'меньше или равен',
         value: 'less_than_equal',
     },
     {
-        label: 'is greater than or equal to',
+        label: 'больше или равен',
         value: 'greater_than_equals',
     },
 ];
 const geo = [
     ...boolean,
     {
-        label: 'exists',
-        value: 'exists',
+        label: 'существует',
+        value: 'exists'
     },
     {
-        label: 'near',
-        value: 'near',
-    },
+        label: 'рядом с',
+        value: 'near'
+    }
 ];
 const like = {
-    label: 'is like',
+    label: 'как',
     value: 'like',
 };
 const contains = {
-    label: 'contains',
-    value: 'contains',
+    label: 'содержит',
+    value: 'contains'
 };
 const fieldTypeConditions = {
     text: {

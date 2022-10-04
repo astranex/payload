@@ -106,14 +106,14 @@ const WhereBuilder: React.FC<Props> = (props) => {
             {conditions.length > 0 && (
                 <React.Fragment>
                     <div className={`${baseClass}__label`}>
-                        Filter {plural} where
+                        Фильтровать {plural} когда
                     </div>
                     <ul className={`${baseClass}__or-filters`}>
                         {conditions.map((or, orIndex) => (
                             <li key={orIndex}>
                                 {orIndex !== 0 && (
                                     <div className={`${baseClass}__label`}>
-                                        Or
+                                        Или
                                     </div>
                                 )}
                                 <ul className={`${baseClass}__and-filters`}>
@@ -124,7 +124,7 @@ const WhereBuilder: React.FC<Props> = (props) => {
                                                     <div
                                                         className={`${baseClass}__label`}
                                                     >
-                                                        And
+                                                        И
                                                     </div>
                                                 )}
                                                 <Condition

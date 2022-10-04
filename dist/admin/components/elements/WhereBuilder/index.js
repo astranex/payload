@@ -97,11 +97,11 @@ const WhereBuilder = (props) => {
                 React.createElement(
                     'div',
                     { className: `${baseClass}__label` },
-                    'Filter',
+                    'Фильтровать',
                     ' ',
                     plural,
                     ' ',
-                    'where'
+                    'когда'
                 ),
                 React.createElement(
                     'ul',
@@ -114,7 +114,7 @@ const WhereBuilder = (props) => {
                                 React.createElement(
                                     'div',
                                     { className: `${baseClass}__label` },
-                                    'Or'
+                                    'Или'
                                 ),
                             React.createElement(
                                 'ul',
@@ -134,7 +134,7 @@ const WhereBuilder = (props) => {
                                                     {
                                                         className: `${baseClass}__label`
                                                     },
-                                                    'And'
+                                                    'И'
                                                 ),
                                             React.createElement(Condition, {
                                                 value: conditions[orIndex].and[
@@ -166,7 +166,7 @@ const WhereBuilder = (props) => {
                                 field: reducedFields[0].value
                             })
                     },
-                    'Or'
+                    'Или'
                 )
             ),
         conditions.length === 0 &&

@@ -61,9 +61,9 @@ const Auth: React.FC<Props> = (props) => {
         });
 
         if (response.status === 200) {
-            toast.success('Successfully unlocked', { autoClose: 3000 });
+            toast.success('Успешно разблокирован', { autoClose: 3000 });
         } else {
-            toast.error('Successfully unlocked');
+            toast.error('Успешно разблокирован');
         }
     }, [serverURL, api, slug, email]);
 

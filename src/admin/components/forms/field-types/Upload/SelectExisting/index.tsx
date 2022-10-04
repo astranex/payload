@@ -108,7 +108,6 @@ const SelectExistingUploadModal: React.FC<Props> = (props) => {
                     <header className={`${baseClass}__header`}>
                         <div>
                             <h1>
-                                {' '}
                                 Выбрать из существующих
                                 {collection.labels.singular}
                             </h1>
